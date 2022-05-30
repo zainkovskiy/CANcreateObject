@@ -31,7 +31,7 @@ export function Dadata(props) {
           variant="contained"
           type='button'
           onClick={() => { step(object.step - 1) }}
-        >backw
+        >back
         </Button>
         <Button
           variant="contained"

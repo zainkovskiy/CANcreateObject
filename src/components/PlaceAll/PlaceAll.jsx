@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 import { Dadata } from 'components/Dadata';
 import { HandsAddress } from 'components/HandsAddress';
@@ -15,29 +16,48 @@ export function PlaceAll(props) {
       <span className='subtitle'>Адрес</span>
       <FormControlLabel
         control={<Switch
-        name="addressType"
+          name="addressType"
           onChange={(event) => { newValue(event), setHandsEnter(event.target.checked) }}
           checked={handsEnter}
         />}
         label="Ввести вручную"
         sx={{ width: 'fit-content' }}
       />
-      {
-        handsEnter ?
-          <HandsAddress
-            object={object}
-            step={step}
-            getAddress={getAddress}
-            clearCurrentList={clearCurrentList}
-            currentList={currentList}
-            address={address}
-          /> :
-          <Dadata
-            step={step}
-            address={address}
-            object={object}
-          />
-      }
+        {
+          handsEnter ?
+            <AnimatePresence exitBeforeEnter initial={false}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ scale: 0, opacity: 0, }}
+                transition={{ duration: 2 }}
+              >
+                <HandsAddress
+                  object={object}
+                  step={step}
+                  getAddress={getAddress}
+                  clearCurrentList={clearCurrentList}
+                  currentList={currentList}
+                  address={address}
+                />
+              </motion.div>
+            </AnimatePresence>
+            :
+            <AnimatePresence exitBeforeEnter initial={false}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ scale: 0, opacity: 0, }}
+                transition={{ duration: 2 }}
+              >
+                <Dadata
+                  step={step}
+                  address={address}
+                  object={object}
+                />
+              </motion.div>
+            </AnimatePresence>
+        }
     </>
   )
 }

@@ -29,7 +29,7 @@ export const objectReducer = handleActions({
       reqTypeofFlat: '',
       isPart: true,
       reqGroundCategory: 'Другое',
-      "step": 0
+      "step": 1
     }))
   },
 
