@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from 'react-hook-form';
 
 import { TextFieldForm } from "components/TextFieldForm";
@@ -10,6 +10,7 @@ import './HandsAddress.scss';
 
 export function HandsAddress(props) {
   const { object, step, getAddress, currentList, clearCurrentList, address } = props;
+  const inputEl = useRef(null);
   const [currenOpentList, setCurrentOpenList] = useState('');
   const [overallList, setOverallList] = useState([]);
   const [openList, setOpenList] = useState({
@@ -49,7 +50,7 @@ export function HandsAddress(props) {
     }
   })
   useEffect(() => {
-    object?.address?.reqRegion || setOverallList([...overallList, 'Новосибирская область']) 
+    object?.address?.reqRegion || setOverallList([...overallList, 'Новосибирская область'])
   }, [])
 
   const handlerChange = (action, name, event) => {
@@ -75,10 +76,10 @@ export function HandsAddress(props) {
       clearCurrentList();
     }
   }
-  const checkRightValue = (curValue, clearValue) => {
+  const checkRightValue = (curValue, clearValue, source) => {
     const find = overallList.find(value => value === curValue);
     if (!find) {
-      clearValue('')
+      source === 'area' ? setValue('reqArea', '') : clearValue('')
     }
   }
 
@@ -92,8 +93,8 @@ export function HandsAddress(props) {
   }
 
   const checkArea = () => {
-    if (checkCity()){
-      checkRightValue(getValues().reqArea, setValue('reqArea', ''))
+    if (checkCity()) {
+      checkRightValue(getValues().reqArea, () => {}, 'area')
     }
   }
 
@@ -101,11 +102,8 @@ export function HandsAddress(props) {
     <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
       <Controller
         control={control}
-        {
-        ...register('reqRegion', {
-          required: 'Поле обязательно к заполнению'
-        })
-        }
+        rules={{ required: 'Поле обязательно к заполнению' }}
+        name='reqRegion'
         render={({ field }) => (
           <div className='wrapper-grid__input'>
             <TextField
@@ -133,20 +131,17 @@ export function HandsAddress(props) {
       />
       <Controller
         control={control}
-        {
-        ...register('reqCity', {
-          required: 'Поле обязательно к заполнению'
-        })
-        }
-        render={({field}) => (
+        rules={{ required: 'Поле обязательно к заполнению' }}
+        name='reqCity'
+        render={({ field }) => (
           <TextField
-            onChange={(e) => { field.onChange(e), checkArea() }}
+            onChange={(e) => { field.onChange(e), checkArea(), console.log(field) }}
             autoComplete='off'
             label='Населенный пункт*'
             size='small'
             fullWidth
-            inputRef={field.ref}
             value={field.value}
+            register = 'reqCity'
             error={errors?.reqCity ? true : false}
             helperText={errors?.reqCity?.message && errors.reqCity.message}
           />
@@ -154,11 +149,8 @@ export function HandsAddress(props) {
       />
       <Controller
         control={control}
-        {
-        ...register('reqArea', {
-          required: 'Поле обязательно к заполнению'
-        })
-        }
+        rules={{ required: 'Поле обязательно к заполнению' }}
+        name='reqArea'
         render={({ field }) => (
           <div className='wrapper-grid__input'>
             <TextField
@@ -186,32 +178,32 @@ export function HandsAddress(props) {
       />
       <TextFieldForm
         label='Улица*'
-        params={{
-          ...register('reqStreet', {
-            required: 'Поле обязательно к заполнению'
-          })
-        }}
+        {
+        ...register('reqStreet', {
+          required: 'Поле обязательно к заполнению'
+        })
+        }
         error={errors?.reqStreet ? true : false}
         helperText={errors?.reqStreet?.message && errors.reqStreet.message}
       />
       <TextFieldForm
         label={object.reqTypeofRealty === 'Земельный участок' ? 'Номер участка*' : "Номер дома*"}
-        params={{
-          ...register('reqHouseNumber', {
-            required: 'Поле обязательно к заполнению'
-          })
-        }}
+        {
+        ...register('reqHouseNumber', {
+          required: 'Поле обязательно к заполнению'
+        })
+        }
         error={errors?.reqHouseNumber ? true : false}
         helperText={errors?.reqHouseNumber?.message && errors.reqHouseNumber.message}
       />
       {(object.reqTypeofRealty !== 'Дом, коттедж, дача' && object.reqTypeofRealty !== 'Земельный участок') &&
         <TextFieldForm
           label={object.reqTypeofRealty === 'Гараж' ? 'Номер парковочного места' : 'Номер квартиры'}
-          params={{
-            ...register('reqFlat', {
-              required: 'Поле обязательно к заполнению'
-            })
-          }}
+          {
+          ...register('reqFlat', {
+            required: 'Поле обязательно к заполнению'
+          })
+          }
           error={errors?.reqFlat ? true : false}
           helperText={errors?.reqFlat?.message && errors.reqFlat.message}
         />
@@ -220,11 +212,11 @@ export function HandsAddress(props) {
         (object.reqTypeofRealty === 'Дом, коттедж, дача' || object.reqTypeofRealty === 'Земля') &&
         <TextFieldForm
           label="Садовое общество"
-          params={{
-            ...register('reqMunicipality', {
-              required: 'Поле обязательно к заполнению'
-            })
-          }}
+          {
+          ...register('reqMunicipality', {
+            required: 'Поле обязательно к заполнению'
+          })
+          }
           error={errors?.reqMunicipality ? true : false}
           helperText={errors?.reqMunicipality?.message && errors.reqMunicipality.message}
         />
@@ -237,7 +229,6 @@ export function HandsAddress(props) {
         >back
         </Button>
         <Button
-          disabled={!isDirty}
           variant="contained"
           type='submit'
         >submit

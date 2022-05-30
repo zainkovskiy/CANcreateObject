@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef   } from "react";
+import React from "react";
+import { useController } from "react-hook-form";
 
 import { selectList } from 'lists/select';
 
@@ -7,45 +8,32 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-// export function SelectForm(props) {
-//   const { label, value, name, onChange, inputRef, error, helperText } = props;
-//   return (
-//     <FormControl fullWidth size="small">
-//       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-//       <Select
-//         label={label}
-//         labelId="demo-simple-select-label"
-//         id="demo-simple-select"
-//         value={value}
-//         onChange={onChange}
-//         inputRef={inputRef}
-//         size='small'
-//         error={error}
-//         helperText={helperText}
-//       >
-//         {
-//           selectList[name].map((item, idx) => <MenuItem key={idx} value={item}>{item}</MenuItem>)
-//         }
-//       </Select>
-//     </FormControl>
-//   )
-// }
-
-export const SelectForm = forwardRef((props, ref) => {
+export function SelectForm(props) {
+  const { control, name, label, error, defaultValue } = props;
+  const {
+    field: { ref, ...inputProps },
+  } = useController({
+    name,
+    control,
+    rules: { required: 'Поле обязательно к заполнению' },
+    defaultValue: defaultValue,
+  });
   return (
     <FormControl fullWidth size="small">
-      <InputLabel id="demo-simple-select-label">{ props.label }</InputLabel>
+      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
+        label={label}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         size='small'
-        {...props}
+        {...inputProps}
+        inputRef={ref}
+        error={error}
       >
         {
-          selectList[props.name].map((item, idx) => <MenuItem key={idx} value={item}>{item}</MenuItem>)
+          selectList[name].map((item, idx) => <MenuItem key={idx} value={item}>{item}</MenuItem>)
         }
       </Select>
     </FormControl>
   )
-})
-
+}

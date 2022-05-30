@@ -1,0 +1,29 @@
+.final{
+  padding: 0.3rem 1rem 1rem 1rem;
+  border: 1px solid #484848;
+  border-radius: 5px;
+  &__subtitle{
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    align-items: center;
+    line-height: 36.5px;
+    font-weight: 700;
+  }
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    font-family: 'Montserrat';
+    font-size: 12px;
+    border-bottom: 1px dashed #c7c7c7;
+    & span{
+      font-family: 'Montserrat';
+    }
+  }
+  &__block-text{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+}

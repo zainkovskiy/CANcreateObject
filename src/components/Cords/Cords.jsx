@@ -51,21 +51,21 @@ export function Cords(props) {
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
         <TextFieldForm
           label='Координаты X*'
-          params={{
+          {
             ...register('lat', {
               required: 'Поле обязательно к заполнению'
             })
-          }}
+          }
           error={errors?.lat ? true : false}
           helperText={errors?.lat?.message && errors.lat.message}
         />
         <TextFieldForm
           label='Координаты Y*'
-          params={{
+          {
             ...register('lng', {
               required: 'Поле обязательно к заполнению'
             })
-          }}
+          }
           error={errors?.lng ? true : false}
           helperText={errors?.lng?.message && errors.lng.message}
         />
@@ -73,11 +73,11 @@ export function Cords(props) {
           (object.reqTypeofRealty === 'Дом, коттедж, дача' || object.reqTypeofRealty === 'Змельный участок') &&
           <TextFieldForm
             label='Кадастровый номер участка*'
-            params={{
+            {
               ...register('reqLandCadastralNumber', {
                 required: 'Поле обязательно к заполнению'
               })
-            }}
+            }
             error={errors?.reqLandCadastralNumber ? true : false}
             helperText={errors?.reqLandCadastralNumber?.message && errors.reqLandCadastralNumber.message}
           />
@@ -86,11 +86,11 @@ export function Cords(props) {
           object.reqTypeofRealty === 'Дом, коттедж, дача' &&
           <TextFieldForm
             label='Кадастровый номер объекта*'
-            params={{
+            {
               ...register('reqObjectCadastralNumber', {
                 required: 'Поле обязательно к заполнению'
               })
-            }}
+            }
             error={errors?.reqObjectCadastralNumber ? true : false}
             helperText={errors?.reqObjectCadastralNumber?.message && errors.reqObjectCadastralNumber.message}
           />
