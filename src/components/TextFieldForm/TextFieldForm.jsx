@@ -10,6 +10,8 @@ export const TextFieldForm = forwardRef((props, ref) => {
       size="small"
       fullWidth
       {...props}
+      error={props.errors ? true : false}
+      helperText={props.errors?.message ? props.errors.message : ''}
     />
   )
 })

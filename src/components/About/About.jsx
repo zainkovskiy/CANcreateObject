@@ -1,10 +1,18 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import moment from "moment";
 
 import { Button } from "@mui/material";
+import { FormCheckbox } from "components/FormCheckbox";
 import { TextFieldForm } from "components/TextFieldForm";
 import { ToggleGroupForm } from "components/ToggleGroupForm";
 import { SelectForm } from "components/SelectForm";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { TextField } from "@mui/material";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export function About(props) {
   const { object, form, step } = props;
@@ -16,11 +24,17 @@ export function About(props) {
     getValues,
   } = useForm({
     defaultValues: {
+      rooms: object?.rooms || '',
       plotArea: object?.plotArea || '',
       totalArea: object?.totalArea || '',
       livingArea: object?.livingArea || '',
       kitchenArea: object?.kitchenArea || '',
-      rooms: object?.rooms || '',
+      ceilingHeight: object?.ceilingHeight || '',
+      windowsOnCourt: object?.windowsOnCourt || false,
+      windowsOnStreet: object?.windowsOnStreet || false,
+      designerRenovation: object?.designerRenovation || false,
+      quarter: object?.quarter || moment().quarter().toString(),
+      buildYear: object?.buildYear ? moment(object.buildYear) : '',
     }
   })
 
@@ -44,8 +58,7 @@ export function About(props) {
               required: 'Поле обязательно к заполнению'
             })
             }
-            error={errors?.plotArea ? true : false}
-            helperText={errors?.plotArea?.message ? errors.plotArea.message : ''}
+            errors={errors.plotArea}
           />
         }
         {
@@ -57,8 +70,7 @@ export function About(props) {
               required: 'Поле обязательно к заполнению'
             })
             }
-            error={errors?.totalArea ? true : false}
-            helperText={errors?.totalArea?.message ? errors.totalArea.message : ''}
+            errors={errors.totalArea}
           />
         }
         {
@@ -71,8 +83,7 @@ export function About(props) {
                 required: 'Поле обязательно к заполнению'
               })
               }
-              error={errors?.livingArea ? true : false}
-              helperText={errors?.livingArea?.message ? errors.livingArea.message : ''}
+              errors={errors.livingArea}
             />
             <TextFieldForm
               label="Площадь кухни (m2)"
@@ -81,10 +92,21 @@ export function About(props) {
                 required: 'Поле обязательно к заполнению'
               })
               }
-              error={errors?.kitchenArea ? true : false}
-              helperText={errors?.kitchenArea?.message ? errors.kitchenArea.message : ''}
+              errors={errors.kitchenArea}
             />
           </>
+        }
+        {
+          object.propertyType !== 'Земельный участок' &&
+          <TextFieldForm
+            label="Высота потолков"
+            {
+            ...register('ceilingHeight', {
+              required: 'Поле обязательно к заполнению'
+            })
+            }
+            errors={errors.ceilingHeight}
+          />
         }
         {
           (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
@@ -235,28 +257,49 @@ export function About(props) {
         </div>
         {
           (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' | object.propertyType === 'Дом, коттедж, дача') &&
-
-          <div>
-            <SelectForm
-              defaultValue={object?.repair || ''}
+          <>
+            <div>
+              <SelectForm
+                defaultValue={object?.repair || ''}
+                control={control}
+                name='repair'
+                label='Ремонт'
+                error={errors?.repair ? true : false}
+              />
+              <span className="text text_error">{errors?.repair?.message ? errors.repair.message : ''}</span>
+            </div>
+            <div>
+              <SelectForm
+                defaultValue={object?.finishing || ''}
+                control={control}
+                name='finishing'
+                label='Отделка'
+                error={errors?.finishing ? true : false}
+              />
+              <span className="text text_error">{errors?.finishing?.message ? errors.finishing.message : ''}</span>
+            </div>
+            <FormCheckbox
               control={control}
-              name='repair'
-              label='Ремонт'
-              error={errors?.repair ? true : false}
+              name='designerRenovation'
+              label='Дизайнерский ремонт'
             />
-            <span className="text text_error">{errors?.repair?.message ? errors.repair.message : ''}</span>
-          </div>
+          </>
         }
-        <div>
-          <SelectForm
-            defaultValue={object?.finishing || ''}
-            control={control}
-            name='finishing'
-            label='Отделка'
-            error={errors?.finishing ? true : false}
-          />
-          <span className="text text_error">{errors?.finishing?.message ? errors.finishing.message : ''}</span>
-        </div>
+        {
+          (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Комната') &&
+          <>
+            <FormCheckbox
+              control={control}
+              name='windowsOnCourt'
+              label='Окна во двор'
+            />
+            <FormCheckbox
+              control={control}
+              name='windowsOnStreet'
+              label='Окна на улицу'
+            />
+          </>
+        }
         {
           object.propertyType === 'Дом, коттедж, дача' &&
           <div>
@@ -346,6 +389,66 @@ export function About(props) {
               error={errors?.plotStatus ? true : false}
             />
             <span className="text text_error">{errors?.plotStatus?.message ? errors.plotStatus.message : ''}</span>
+          </div>
+        }
+        {
+          (object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Дом, коттедж, дача') &&
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+          >
+            {
+              object.propertyType === 'Переуступка ДДУ' &&
+              <span className="text text_label">
+                Дата сдачи (квартал, год)
+              </span>
+            }
+            <div
+              style={{ display: 'flex', gap: '0.5rem' }}
+            >
+              {
+                object.propertyType === 'Переуступка ДДУ' &&
+                <Controller
+                  name='quarter'
+                  control={control}
+                  render={({ field }) =>
+                    <ToggleButtonGroup
+                      color="primary"
+                      exclusive
+                      {...field}
+                      size='small'
+                    >
+                      <ToggleButton value="1">I</ToggleButton>
+                      <ToggleButton value="2">II</ToggleButton>
+                      <ToggleButton value="3">III</ToggleButton>
+                      <ToggleButton value="4">IV</ToggleButton>
+                    </ToggleButtonGroup>
+                  }
+                />
+              }
+              <Controller
+                control={control}
+                name="buildYear"
+                rules={{
+                  validate: event => event.isSameOrAfter(moment(), 'year') || 'Не меньше чем текущий'
+                }}
+                render={({ field }) => (
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      views={['year']}
+                      label={object.propertyType === 'Переуступка ДДУ' ? 'Год' : 'Год постройки'}
+                      {...field}
+                      renderInput={(params) =>
+                        <TextField {...params}
+                          size="small"
+                          autoComplete='off'
+                          helperText={errors?.buildYear?.message ? errors?.buildYear?.message : ''}
+                          error={errors?.buildYear ? true : false}
+                        />}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+            </div>
           </div>
         }
         <div className='grid-buttons'>
