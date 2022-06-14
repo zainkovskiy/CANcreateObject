@@ -16,11 +16,11 @@ export function About(props) {
     getValues,
   } = useForm({
     defaultValues: {
-      reqLandArea: object?.reqLandArea || '',
-      reqFlatTotalArea: object?.reqFlatTotalArea || '',
-      reqFlatLivingArea: object?.reqFlatLivingArea || '',
-      reqKitchenArea: object?.reqKitchenArea || '',
-      reqRoomCount: object?.reqRoomCount || '',
+      plotArea: object?.plotArea || '',
+      totalArea: object?.totalArea || '',
+      livingArea: object?.livingArea || '',
+      kitchenArea: object?.kitchenArea || '',
+      rooms: object?.rooms || '',
     }
   })
 
@@ -36,257 +36,316 @@ export function About(props) {
       </span>
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
         {
-          (object.reqTypeofRealty === 'Земельный участок' || object.reqTypeofRealty === 'Дом, коттедж, дача') &&
+          (object.propertyType === 'Земельный участок' || object.propertyType === 'Дом, коттедж, дача') &&
           <TextFieldForm
             label='Площадь участка'
             {
-            ...register('reqLandArea', {
+            ...register('plotArea', {
               required: 'Поле обязательно к заполнению'
             })
             }
-            error={errors?.reqLandArea ? true : false}
-            helperText={errors?.reqLandArea?.message ? errors.reqLandArea.message : ''}
+            error={errors?.plotArea ? true : false}
+            helperText={errors?.plotArea?.message ? errors.plotArea.message : ''}
           />
         }
         {
-          object.reqTypeofRealty !== 'Земельный участок' &&
+          object.propertyType !== 'Земельный участок' &&
           <TextFieldForm
             label="Площадь общая (m2)"
             {
-            ...register('reqFlatTotalArea', {
+            ...register('totalArea', {
               required: 'Поле обязательно к заполнению'
             })
             }
-            error={errors?.reqFlatTotalArea ? true : false}
-            helperText={errors?.reqFlatTotalArea?.message ? errors.reqFlatTotalArea.message : ''}
+            error={errors?.totalArea ? true : false}
+            helperText={errors?.totalArea?.message ? errors.totalArea.message : ''}
           />
         }
         {
-          (object.reqTypeofRealty !== 'Земельный участок' && object.reqTypeofRealty !== 'Гараж') &&
+          (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
           <>
             <TextFieldForm
               label="Площадь жилая (m2)"
               {
-              ...register('reqFlatLivingArea', {
+              ...register('livingArea', {
                 required: 'Поле обязательно к заполнению'
               })
               }
-              error={errors?.reqFlatLivingArea ? true : false}
-              helperText={errors?.reqFlatLivingArea?.message ? errors.reqFlatLivingArea.message : ''}
+              error={errors?.livingArea ? true : false}
+              helperText={errors?.livingArea?.message ? errors.livingArea.message : ''}
             />
             <TextFieldForm
               label="Площадь кухни (m2)"
               {
-              ...register('reqKitchenArea', {
+              ...register('kitchenArea', {
                 required: 'Поле обязательно к заполнению'
               })
               }
-              error={errors?.reqKitchenArea ? true : false}
-              helperText={errors?.reqKitchenArea?.message ? errors.reqKitchenArea.message : ''}
+              error={errors?.kitchenArea ? true : false}
+              helperText={errors?.kitchenArea?.message ? errors.kitchenArea.message : ''}
             />
           </>
         }
         {
-          (object.reqTypeofRealty !== 'Земельный участок' && object.reqTypeofRealty !== 'Гараж') &&
+          (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
           <div className="wrapper-grid_fullWidth">
             <span className="text text_label">Общее количество комнат</span>
             <Controller
               control={control}
               rules={{ required: 'Поле обязательно к заполнению' }}
-              name='reqRoomCount'
+              name='rooms'
               render={({ field }) => (
                 <ToggleGroupForm
                   {...field}
                 />
               )}
             />
-            <span className="text text_error">{errors?.reqRoomCount?.message ? errors.reqRoomCount.message : ''}</span>
+            <span className="text text_error">{errors?.rooms?.message ? errors.rooms.message : ''}</span>
           </div>
-        }        
+        }
         {
-          (object.reqTypeofRealty === 'Квартира' || object.reqTypeofRealty === 'Переуступка ДДУ' || object.reqTypeofRealty === 'Комната') &&
+          (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Комната') &&
           <div>
             <SelectForm
               control={control}
               label='Тип квартиры'
-              name='reqTypeofFlat'
-              error={errors?.reqTypeofFlat ? true : false}
-              defaultValue={object?.reqTypeofFlat || ''}
+              name='appartmentType'
+              error={errors?.appartmentType ? true : false}
+              defaultValue={object?.appartmentType || ''}
             />
-            <span className="text text_error">{errors?.reqTypeofFlat?.message ? errors.reqTypeofFlat.message : ''}</span>
+            <span className="text text_error">{errors?.appartmentType?.message ? errors.appartmentType.message : ''}</span>
           </div>
 
         }
         {
-          (object.reqTypeofRealty === 'Комната' || object.reqTypeofRealty === 'Дом, коттедж, дача') &&
+          (object.propertyType === 'Комната' || object.propertyType === 'Дом, коттедж, дача') &&
           <div>
             <SelectForm
               control={control}
-              name='reqHouseType'
+              name='buildingType'
               label='Тип дома'
-              error={errors?.reqHouseType ? true : false}
-              defaultValue={object?.reqTypeofFlat || ''}
+              error={errors?.buildingType ? true : false}
+              defaultValue={object?.appartmentType || ''}
             />
-            <span className="text text_error">{errors?.reqHouseType?.message ? errors.reqHouseType.message : ''}</span>
+            <span className="text text_error">{errors?.buildingType?.message ? errors.buildingType.message : ''}</span>
           </div>
         }
         {
-          object.reqTypeofRealty === 'Гараж' &&
+          object.propertyType === 'Гараж' &&
           <div>
             <SelectForm
               control={control}
-              name='reqGarageType'
+              name='garageType'
               label='Тип гаража'
-              error={errors?.reqGarageType ? true : false}
-              defaultValue={object?.reqGarageType || ''}
+              error={errors?.garageType ? true : false}
+              defaultValue={object?.garageType || ''}
             />
-            <span className="text text_error">{errors?.reqGarageType?.message ? errors.reqGarageType.message : ''}</span>
+            <span className="text text_error">{errors?.garageType?.message ? errors.garageType.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty === 'Квартира' || object.reqTypeofRealty === 'Переуступка ДДУ' || object.reqTypeofRealty === 'Комната') &&
+          (object.propertyType === 'Дом, коттедж, дача' && object.propertyType === 'Земельный участок') &&
           <div>
             <SelectForm
-              defaultValue={object?.reqTypeofLayout || ''}
+              defaultValue={object?.plotStatus || ''}
               control={control}
-              name='reqTypeofLayout'
+              name='plotStatus'
+              label='Статус участка'
+              error={errors?.plotStatus ? true : false}
+            />
+            <span className="text text_error">{errors?.plotStatus?.message ? errors.plotStatus.message : ''}</span>
+          </div>
+        }
+        {
+          (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Комната') &&
+          <div>
+            <SelectForm
+              defaultValue={object?.layout || ''}
+              control={control}
+              name='layout'
               label='Планировка'
-              error={errors?.reqTypeofLayout ? true : false}
+              error={errors?.layout ? true : false}
             />
-            <span className="text text_error">{errors?.reqTypeofLayout?.message ? errors.reqTypeofLayout.message : ''}</span>
+            <span className="text text_error">{errors?.layout?.message ? errors.layout.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty !== 'Дом, коттедж, дача' && object.reqTypeofRealty !== 'Земельный участок') &&
+          (object.propertyType !== 'Дом, коттедж, дача' && object.propertyType !== 'Земельный участок') &&
           <div>
             <SelectForm
-              defaultValue={object?.reqMaterial || ''}
+              defaultValue={object?.material || ''}
               control={control}
-              name='reqMaterial'
+              name='material'
               label='Материал дома'
-              error={errors?.reqMaterial ? true : false}
+              error={errors?.material ? true : false}
             />
-            <span className="text text_error">{errors?.reqMaterial?.message ? errors.reqMaterial.message : ''}</span>
+            <span className="text text_error">{errors?.material?.message ? errors.material.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty !== 'Земельный участок' && object.reqTypeofRealty !== 'Гараж') &&
+          (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
           <div>
             <SelectForm
-              defaultValue={object?.reqBalcony || ''}
+              defaultValue={object?.gallery || ''}
               control={control}
-              name='reqBalcony'
+              name='gallery'
               label='Балкон'
-              error={errors?.reqBalcony ? true : false}
+              error={errors?.gallery ? true : false}
             />
-            <span className="text text_error">{errors?.reqBalcony?.message ? errors.reqBalcony.message : ''}</span>
+            <span className="text text_error">{errors?.gallery?.message ? errors.gallery.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty !== 'Земельный участок' && object.reqTypeofRealty !== 'Гараж') &&
+          (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
 
           <div>
             <SelectForm
-              defaultValue={object?.reqLoggia || ''}
+              defaultValue={object?.loggias || ''}
               control={control}
-              name='reqLoggia'
+              name='loggias'
               label='Лоджия'
-              error={errors?.reqLoggia ? true : false}
+              error={errors?.loggias ? true : false}
             />
-            <span className="text text_error">{errors?.reqLoggia?.message ? errors.reqLoggia.message : ''}</span>
+            <span className="text text_error">{errors?.loggias?.message ? errors.loggias.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty !== 'Земельный участок' && object.reqTypeofRealty !== 'Гараж') &&
+          (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
 
           <div>
             <SelectForm
-              defaultValue={object?.reqBathroomType || ''}
+              defaultValue={object?.bathroom || ''}
               control={control}
-              name='reqBathroomType'
-              label='Санузел'
-              error={errors?.reqBathroomType ? true : false}
+              name='bathroom'
+              label='Вид санузла'
+              error={errors?.bathroom ? true : false}
             />
-            <span className="text text_error">{errors?.reqBathroomType?.message ? errors.reqBathroomType.message : ''}</span>
+            <span className="text text_error">{errors?.bathroom?.message ? errors.bathroom.message : ''}</span>
           </div>
         }
+        <div>
+          <SelectForm
+            defaultValue={object?.sanitaryType || ''}
+            control={control}
+            name='sanitaryType'
+            label='Тип сантехники'
+            error={errors?.sanitaryType ? true : false}
+          />
+          <span className="text text_error">{errors?.sanitaryType?.message ? errors.sanitaryType.message : ''}</span>
+        </div>
         {
-          (object.reqTypeofRealty === 'Квартира' || object.reqTypeofRealty === 'Переуступка ДДУ') &&
+          (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' | object.propertyType === 'Дом, коттедж, дача') &&
 
           <div>
             <SelectForm
-              defaultValue={object?.reqRepairStatus || ''}
+              defaultValue={object?.repair || ''}
               control={control}
-              name='reqRepairStatus'
+              name='repair'
               label='Ремонт'
-              error={errors?.reqRepairStatus ? true : false}
+              error={errors?.repair ? true : false}
             />
-            <span className="text text_error">{errors?.reqRepairStatus?.message ? errors.reqRepairStatus.message : ''}</span>
+            <span className="text text_error">{errors?.repair?.message ? errors.repair.message : ''}</span>
           </div>
         }
+        <div>
+          <SelectForm
+            defaultValue={object?.finishing || ''}
+            control={control}
+            name='finishing'
+            label='Отделка'
+            error={errors?.finishing ? true : false}
+          />
+          <span className="text text_error">{errors?.finishing?.message ? errors.finishing.message : ''}</span>
+        </div>
         {
-          object.reqTypeofRealty === 'Дом, коттедж, дача' &&
+          object.propertyType === 'Дом, коттедж, дача' &&
           <div>
             <SelectForm
-              defaultValue={object?.reqHouseRoof || ''}
+              defaultValue={object?.houseRoof || ''}
               control={control}
-              name='reqHouseRoof'
+              name='houseRoof'
               label='Кровля'
-              error={errors?.reqHouseRoof ? true : false}
+              error={errors?.houseRoof ? true : false}
             />
-            <span className="text text_error">{errors?.reqHouseRoof?.message ? errors.reqHouseRoof.message : ''}</span>
+            <span className="text text_error">{errors?.houseRoof?.message ? errors.houseRoof.message : ''}</span>
           </div>
         }
         {
-          object.reqTypeofRealty === 'Дом, коттедж, дача' &&
+          object.propertyType === 'Дом, коттедж, дача' &&
           <div>
             <SelectForm
-              defaultValue={object?.reqHouseHeating || ''}
+              defaultValue={object?.heating || ''}
               control={control}
-              name='reqHouseHeating'
+              name='heating'
               label='Отопление'
-              error={errors?.reqHouseHeating ? true : false}
+              error={errors?.heating ? true : false}
             />
-            <span className="text text_error">{errors?.reqHouseHeating?.message ? errors.reqHouseHeating.message : ''}</span>
+            <span className="text text_error">{errors?.heating?.message ? errors.heating.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty === 'Дом, коттедж, дача' || object.reqTypeofRealty === 'Земельный участок') &&
+          object.propertyType === 'Дом, коттедж, дача' &&
           <div>
             <SelectForm
-              defaultValue={object?.reqWaterPipes || ''}
+              defaultValue={object?.heatingType || ''}
               control={control}
-              name='reqWaterPipes'
-              label='Водопровод'
-              error={errors?.reqWaterPipes ? true : false}
+              name='heatingType'
+              label='Тип отопления'
+              error={errors?.heatingType ? true : false}
             />
-            <span className="text text_error">{errors?.reqWaterPipes?.message ? errors.reqWaterPipes.message : ''}</span>
+            <span className="text text_error">{errors?.heatingType?.message ? errors.heatingType.message : ''}</span>
           </div>
         }
         {
-          (object.reqTypeofRealty === 'Дом, коттедж, дача' || object.reqTypeofRealty === 'Земельный участок') &&
+          (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Земельный участок') &&
           <div>
             <SelectForm
-              defaultValue={object?.reqDrainage || ''}
+              defaultValue={object?.waterSupply || ''}
               control={control}
-              name='reqDrainage'
-              label='Слив'
-              error={errors?.reqDrainage ? true : false}
+              name='waterSupply'
+              label='Водоснабжение'
+              error={errors?.waterSupply ? true : false}
             />
-            <span className="text text_error">{errors?.reqDrainage?.message ? errors.reqDrainage.message : ''}</span>
+            <span className="text text_error">{errors?.waterSupply?.message ? errors.waterSupply.message : ''}</span>
           </div>
         }
         {
-          object.reqTypeofRealty === 'Земельный участок' &&
+          (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Земельный участок') &&
           <div>
             <SelectForm
-              defaultValue={object?.reqGroundCategory || ''}
+              defaultValue={object?.gasSupply || ''}
               control={control}
-              name='reqGroundCategory'
-              label='Категория земли'
-              error={errors?.reqGroundCategory ? true : false}
+              name='gasSupply'
+              label='Газоснабжение'
+              error={errors?.waterSupply ? true : false}
             />
-            <span className="text text_error">{errors?.reqGroundCategory?.message ? errors.reqGroundCategory.message : ''}</span>
+            <span className="text text_error">{errors?.gasSupply?.message ? errors.gasSupply.message : ''}</span>
+          </div>
+        }
+        {
+          (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Земельный участок') &&
+          <div>
+            <SelectForm
+              defaultValue={object?.drainage || ''}
+              control={control}
+              name='drainage'
+              label='Канализация'
+              error={errors?.drainage ? true : false}
+            />
+            <span className="text text_error">{errors?.drainage?.message ? errors.drainage.message : ''}</span>
+          </div>
+        }
+        {
+          object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Земельный участок' &&
+          <div>
+            <SelectForm
+              defaultValue={object?.plotStatus || ''}
+              control={control}
+              name='plotStatus'
+              label='Статус земли'
+              error={errors?.plotStatus ? true : false}
+            />
+            <span className="text text_error">{errors?.plotStatus?.message ? errors.plotStatus.message : ''}</span>
           </div>
         }
         <div className='grid-buttons'>

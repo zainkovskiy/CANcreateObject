@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { motion, AnimatePresence, AnimateSharedappartmentType } from 'framer-motion';
 
 import { Dadata } from 'components/Dadata';
 import { HandsAddress } from 'components/HandsAddress';

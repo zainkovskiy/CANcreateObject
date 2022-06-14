@@ -21,15 +21,14 @@ export const objectReducer = handleActions({
       "createtime": "2021-09-21 12:26:27.955249",
       "reqNumber": "58278000007",
       "reqTypeofSeller": "Собственник",
-      "reqTypeofRealty": "Комната",
+      "propertyType": "Дом, коттедж, дача",
       "address": {
 
       },
       "addressType": true,
-      reqTypeofFlat: '',
+      appartmentType: '',
       isPart: true,
-      reqGroundCategory: 'Другое',
-      "step": 1
+      "step": 3
     }))
   },
 

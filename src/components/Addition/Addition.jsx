@@ -11,7 +11,7 @@ import { TextFieldForm } from "components/TextFieldForm";
 export function Addition(props) {
   const { step, object, form, newValue } = props;
   const [isPart, setIsPart] = useState(object?.isPart || false);
-  const [reqRoomsForSale, setReqRoomsForSale] = useState(object?.address?.reqRoomsForSale || '');
+  const [roomsForSale, setroomsForSale] = useState(object?.address?.roomsForSale || '');
   const {
     register,
     handleSubmit,
@@ -19,7 +19,7 @@ export function Addition(props) {
     control,
   } = useForm({
     defaultValues: {
-      reqRoomsForSale: object?.reqRoomsForSale || '',
+      roomsForSale: object?.roomsForSale || '',
       reqAreaForSell: object?.reqAreaForSell || '',
       reqAreaForSell2: object?.reqAreaForSell2 || '',
       reqAreaForSell3: object?.reqAreaForSell3 || '',
@@ -38,7 +38,7 @@ export function Addition(props) {
       <span className='subtitle'>Цена и доля</span>
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
         {
-          object.reqTypeofRealty === 'Комната' &&
+          object.propertyType === 'Комната' &&
           <div className='wrapper-grid_fullWidth'>
             <FormControlLabel
               control={<Switch
@@ -52,24 +52,24 @@ export function Addition(props) {
           </div>
         }
         {
-          isPart && object.reqTypeofRealty === 'Комната' ?
+          isPart && object.propertyType === 'Комната' ?
             <div className="wrapper-grid_fullWidth">
               <span className="text text_label">Количество комнат на продажу</span>
               <Controller
                 control={control}
                 rules={{ required: 'Поле обязательно к заполнению' }}
-                name='reqRoomsForSale'
+                name='roomsForSale'
                 render={({ field }) => (
                   <ToggleGroupForm
-                    onChange={(e) => { field.onChange(e), setReqRoomsForSale(e.target.value) }}
+                    onChange={(e) => { field.onChange(e), setroomsForSale(e.target.value) }}
                     value={field.value}
-                    name='reqRoomsForSale'
+                    name='roomsForSale'
                   />
                 )}
               />
               <div style={{ display: 'flex', gap: '0.2rem' }}>
                 {
-                  +reqRoomsForSale > 0 &&
+                  +roomsForSale > 0 &&
                   <TextFieldForm
                     label="Площадь комнаты 1 (m2)"
                     {
@@ -82,7 +82,7 @@ export function Addition(props) {
                   />
                 }
                 {
-                  +reqRoomsForSale > 1 &&
+                  +roomsForSale > 1 &&
                   <TextFieldForm
                     label="Площадь комнаты 2 (m2)"
                     {
@@ -95,7 +95,7 @@ export function Addition(props) {
                   />
                 }
                 {
-                  reqRoomsForSale === '3' &&
+                  roomsForSale === '3' &&
                   <TextFieldForm
                     label="Площадь комнаты 3 (m2)"
                     {
@@ -108,7 +108,7 @@ export function Addition(props) {
                   />
                 }
               </div>
-              <span className="text text_error">{errors?.reqRoomsForSale?.message ? errors.reqRoomsForSale.message : ''}</span>
+              <span className="text text_error">{errors?.roomsForSale?.message ? errors.roomsForSale.message : ''}</span>
             </div> :
             <>
               <TextFieldForm

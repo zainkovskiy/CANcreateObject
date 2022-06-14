@@ -31,7 +31,7 @@ export function HandsAddress(props) {
       reqCity: object.address.reqCity || '',
       reqArea: object.address.reqArea || '',
       reqStreet: object.address.reqStreet || '',
-      reqHouseNumber: object.address.reqHouseNumber || '',
+      appartmentNumber: object.address.appartmentNumber || '',
       reqFlat: object.address.reqFlat || '',
       reqMunicipality: object.address.reqMunicipality || '',
     },
@@ -187,18 +187,18 @@ export function HandsAddress(props) {
           helperText={errors?.reqStreet?.message && errors.reqStreet.message}
         />
         <TextFieldForm
-          label={object.reqTypeofRealty === 'Земельный участок' ? 'Номер участка*' : "Номер дома*"}
+          label={object.propertyType === 'Земельный участок' ? 'Номер участка*' : "Номер дома*"}
           {
-          ...register('reqHouseNumber', {
+          ...register('appartmentNumber', {
             required: 'Поле обязательно к заполнению'
           })
           }
-          error={errors?.reqHouseNumber ? true : false}
-          helperText={errors?.reqHouseNumber?.message && errors.reqHouseNumber.message}
+          error={errors?.appartmentNumber ? true : false}
+          helperText={errors?.appartmentNumber?.message && errors.appartmentNumber.message}
         />
-        {(object.reqTypeofRealty !== 'Дом, коттедж, дача' && object.reqTypeofRealty !== 'Земельный участок') &&
+        {(object.propertyType !== 'Дом, коттедж, дача' && object.propertyType !== 'Земельный участок') &&
           <TextFieldForm
-            label={object.reqTypeofRealty === 'Гараж' ? 'Номер парковочного места' : 'Номер квартиры'}
+            label={object.propertyType === 'Гараж' ? 'Номер парковочного места' : 'Номер квартиры'}
             {
             ...register('reqFlat', {
               required: 'Поле обязательно к заполнению'
@@ -209,7 +209,7 @@ export function HandsAddress(props) {
           />
         }
         {
-          (object.reqTypeofRealty === 'Дом, коттедж, дача' || object.reqTypeofRealty === 'Земля') &&
+          (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Земля') &&
           <TextFieldForm
             label="Садовое общество"
             {

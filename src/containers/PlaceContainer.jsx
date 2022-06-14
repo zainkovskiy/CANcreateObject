@@ -70,7 +70,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, Рябиновая улица, 14/1",
-        "reqHouseNumber": 1
+        "appartmentNumber": 1
       },
       {
         "idresidential_complex": "92",
@@ -80,7 +80,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, Рябиновая улица, 14/1",
-        "reqHouseNumber": 2
+        "appartmentNumber": 2
       },
       {
         "idresidential_complex": "93",
@@ -90,7 +90,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, Рябиновая улица, 14/1",
-        "reqHouseNumber": 3
+        "appartmentNumber": 3
       },
       {
         "idresidential_complex": "94",
@@ -100,7 +100,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, 1-я Чулымская улица, 112",
-        "reqHouseNumber": 4
+        "appartmentNumber": 4
       },
       {
         "idresidential_complex": "95",
@@ -110,7 +110,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, 1-я Чулымская улица, 112",
-        "reqHouseNumber": 1
+        "appartmentNumber": 1
       },
       {
         "idresidential_complex": "96",
@@ -120,7 +120,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 10",
-        "reqHouseNumber": 2
+        "appartmentNumber": 2
       },
       {
         "idresidential_complex": "97",
@@ -130,7 +130,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, 1-я Чулымская улица, 112",
-        "reqHouseNumber": 3
+        "appartmentNumber": 3
       },
       {
         "idresidential_complex": "98",
@@ -140,7 +140,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 8",
-        "reqHouseNumber": 4
+        "appartmentNumber": 4
       },
       {
         "idresidential_complex": "99",
@@ -150,7 +150,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 16",
-        "reqHouseNumber": 5
+        "appartmentNumber": 5
       },
       {
         "idresidential_complex": "100",
@@ -160,7 +160,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 12",
-        "reqHouseNumber": 6
+        "appartmentNumber": 6
       },
       {
         "idresidential_complex": "101",
@@ -170,7 +170,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 14",
-        "reqHouseNumber": 7
+        "appartmentNumber": 7
       },
       {
         "idresidential_complex": "102",
@@ -180,7 +180,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 23",
-        "reqHouseNumber": 8
+        "appartmentNumber": 8
       },
       {
         "idresidential_complex": "103",
@@ -190,7 +190,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, 1-я Чулымская улица, 26к",
-        "reqHouseNumber": 9
+        "appartmentNumber": 9
       },
       {
         "idresidential_complex": "104",
@@ -200,7 +200,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, 1-я Чулымская улица, с18",
-        "reqHouseNumber": 10
+        "appartmentNumber": 10
       },
       {
         "idresidential_complex": "105",
@@ -210,7 +210,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, улица Ясный Берег, 13",
-        "reqHouseNumber": 11
+        "appartmentNumber": 11
       },
       {
         "idresidential_complex": "109",
@@ -220,7 +220,7 @@ class PlaceContainer extends PureComponent {
         "reqCity": "Новосибирск",
         "reqArea": "Дзержинский",
         "reqStreet": "Россия, Новосибирск, 2-я Обская улица, 71/1",
-        "reqHouseNumber": 12
+        "appartmentNumber": 12
       }
     ] })
   } catch{
@@ -235,7 +235,7 @@ class PlaceContainer extends PureComponent {
     return (
       <>
         {
-          object.reqTypeofRealty === 'Переуступка ДДУ' ?
+          object.propertyType === 'Переуступка ДДУ' ?
             <PlaceNew
               object={object}
               step={step}

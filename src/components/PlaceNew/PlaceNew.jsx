@@ -25,7 +25,7 @@ export function PlaceNew(props) {
       reqCity: object.reqCity || '',
       reqArea: object.reqArea || '',
       reqStreet: object.reqStreet || '',
-      reqHouseNumber: object.reqHouseNumber || '',
+      appartmentNumber: object.appartmentNumber || '',
       reqFlat: object.reqFlat || '',
     },
     mode: 'onSubmit',
@@ -62,7 +62,7 @@ export function PlaceNew(props) {
 
   const handleSelectItem = (item) => {
     setOpenComplex(false);
-    setOverallList([...overallList, `${item.reqComplex} ${item.reqHouseNumber}`]);
+    setOverallList([...overallList, `${item.reqComplex} ${item.appartmentNumber}`]);
     for (let key in item) {
       setValue(key, item[key])
     }
@@ -104,7 +104,7 @@ export function PlaceNew(props) {
                 open={openComplex}
                 searchList={currentList}
                 name='reqComplex'
-                valueName='reqHouseNumber'
+                valueName='appartmentNumber'
                 handleSelectItem={handleSelectItem}
                 changeInput={field.onChange}
               />
@@ -156,9 +156,9 @@ export function PlaceNew(props) {
           label="Номер дома"
           size="small"
           fullWidth
-          value={getValues().reqHouseNumber}
+          value={getValues().appartmentNumber}
           {
-          ...register('reqHouseNumber')
+          ...register('appartmentNumber')
           }
         />
         <TextField

@@ -45,7 +45,7 @@ export function Cords(props) {
         Местоположение
       </span>
       {
-        (object.reqTypeofRealty === 'Квартира' || object.reqTypeofRealty === 'Переуступка ДДУ' || object.reqTypeofRealty === 'Комната') &&
+        (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Комната') &&
         <p className='text attention'>В соответствии с требованиями ЦИАН, необходимо указать координаты с точность до дома. Внимание! В случае ввода не верных координат объект не выгрузится в рекламу</p>
       }
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
@@ -70,7 +70,7 @@ export function Cords(props) {
           helperText={errors?.lng?.message && errors.lng.message}
         />
         {
-          (object.reqTypeofRealty === 'Дом, коттедж, дача' || object.reqTypeofRealty === 'Змельный участок') &&
+          (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Змельный участок') &&
           <TextFieldForm
             label='Кадастровый номер участка*'
             {
@@ -83,7 +83,7 @@ export function Cords(props) {
           />
         }
         {
-          object.reqTypeofRealty === 'Дом, коттедж, дача' &&
+          object.propertyType === 'Дом, коттедж, дача' &&
           <TextFieldForm
             label='Кадастровый номер объекта*'
             {

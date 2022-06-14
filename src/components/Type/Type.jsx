@@ -14,31 +14,27 @@ export function Type(props) {
       <div className='wrapper_type'>
         <ToggleButtonGroup
           color="primary"
-          value={object.reqTypeofRealty}
+          value={object.propertyType}
           exclusive
           onChange={event => handle(event)}
         >
           <ToggleButton
-            name='reqTypeofRealty'
-            value={object.reqTypeofRealty === 'Переуступка ДДУ' ? 'Переуступка ДДУ' : 'Квартира'}
-            size="small"
-          >
-            Квартира
-          </ToggleButton>
-          <ToggleButton name='reqTypeofRealty' size="small" value="Комната">Комната</ToggleButton>
-          <ToggleButton name='reqTypeofRealty' size="small" value="Дом, коттедж, дача">Дом, коттедж, дача</ToggleButton>
-          <ToggleButton name='reqTypeofRealty' size="small" value="Земельный участок">Земельный участок</ToggleButton>
-          <ToggleButton name='reqTypeofRealty' size="small" value="Гараж">Гараж</ToggleButton>
+            name='propertyType' value='Квартира' size="small">Квартира</ToggleButton>
+          <ToggleButton name='propertyType' size="small" value="Переуступка ДДУ">Новостройка</ToggleButton>
+          <ToggleButton name='propertyType' size="small" value="Комната">Комната</ToggleButton>
+          <ToggleButton name='propertyType' size="small" value="Дом, коттедж, дача">Дом, коттедж, дача</ToggleButton>
+          <ToggleButton name='propertyType' size="small" value="Земельный участок">Земельный участок</ToggleButton>
+          <ToggleButton name='propertyType' size="small" value="Гараж">Гараж</ToggleButton>
         </ToggleButtonGroup>
-        {
-          (object.reqTypeofRealty === 'Квартира' || object.reqTypeofRealty === 'Переуступка ДДУ') &&
+        {/* {
+          (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ') &&
           <div className='toggle-btn'>
             <div className='toggle-btn__item toggle-btn__item50'>
               <input
                 id='full'
-                name='reqTypeofRealty'
+                name='propertyType'
                 type="radio"
-                checked={object.reqTypeofRealty === 'Квартира'}
+                checked={object.propertyType === 'Квартира'}
                 value='Квартира'
                 onChange={(event) => handle(event)}
               />
@@ -49,9 +45,9 @@ export function Type(props) {
             <div className='toggle-btn__item toggle-btn__item50'>
               <input
                 id='part'
-                name='reqTypeofRealty'
+                name='propertyType'
                 type="radio"
-                checked={object.reqTypeofRealty === 'Переуступка ДДУ'}
+                checked={object.propertyType === 'Переуступка ДДУ'}
                 value='Переуступка ДДУ'
                 onChange={(event) => handle(event)}
               />
@@ -60,9 +56,9 @@ export function Type(props) {
               </label>
             </div>
           </div>
-        }
+        } */}
         <Button
-          disabled={!object.reqTypeofRealty}
+          disabled={!object.propertyType}
           style={{ alignSelf: 'flex-end' }}
           variant="contained"
           onClick={() => step(object.step + 1)}
