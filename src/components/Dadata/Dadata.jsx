@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 
-import Button from '@mui/material/Button';
+import { address, form } from 'actions/object';
+
 
 import './Dadata.scss';
 
 export function Dadata(props) {
-  const { address, step, object } = props;
+  const { object } = props;
+  const dispatch = useDispatch();
   const [addressDadata, setAddressDadata] = useState(object.addressType ? '' : object.address);
+
+  useEffect(() => {
+    console.log(addressDadata);
+    if (addressDadata) {
+      dispatch(address(addressDadata))
+    }
+  }, [addressDadata])
+
   return (
-    <>
+    <div className='wrapper-grid_fullWidth'>
       <AddressSuggestions
         token="408e6651c0b9bfc8e2f487383d45353973f3285c"
         value={addressDadata}
@@ -22,25 +33,9 @@ export function Dadata(props) {
           {
             placeholder: 'Введите адрес',
             className: 'dadata__input',
-            onBlur: (event) => event.target.value.length === 0 && setAddress(''),
           }
         }
       />
-      <div className='grid-buttons'>
-        <Button
-          variant="contained"
-          type='button'
-          onClick={() => { step(object.step - 1) }}
-        >back
-        </Button>
-        <Button
-          variant="contained"
-          type='submit'
-          disabled={!addressDadata}
-          onClick={() => { address(addressDadata), step(object.step + 1) }}
-        >next
-        </Button>
-      </div>
-    </>
+    </div>
   )
 }

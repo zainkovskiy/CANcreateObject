@@ -1,63 +1,55 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, AnimateSharedappartmentType } from 'framer-motion';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+import Button from "@mui/material/Button";
 
 import { Dadata } from 'components/Dadata';
-import { HandsAddress } from 'components/HandsAddress';
-
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import { Cords } from 'components/Cords';
 
 export function PlaceAll(props) {
-  const { object, step, getAddress, currentList, clearCurrentList, address, newValue } = props;
-  const [handsEnter, setHandsEnter] = useState(object.addressType);
+  const { object, step, form } = props;
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+  } = useForm({
+    defaultValues: {
+      lat: object.lat || '55.0415000',
+      lng: object.lng || '82.9346000',
+      reqLandCadastralNumber: object.reqLandCadastralNumber || '',
+      reqObjectCadastralNumber: object.reqObjectCadastralNumber || '',
+    },
+    mode: 'onSubmit',
+  })
+
+  const onSubmit = (data) => {
+    console.log(data);
+    form(data);
+    step(object.step + 1)
+
+  }
 
   return (
     <>
-      <span className='subtitle'>Адрес</span>
-      <FormControlLabel
-        control={<Switch
-          name="addressType"
-          onChange={(event) => { newValue(event), setHandsEnter(event.target.checked) }}
-          checked={handsEnter}
-        />}
-        label="Ввести вручную"
-        sx={{ width: 'fit-content' }}
-      />
-        {
-          handsEnter ?
-            <AnimatePresence exitBeforeEnter initial={false}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ scale: 0, opacity: 0, }}
-                transition={{ duration: 2 }}
-              >
-                <HandsAddress
-                  object={object}
-                  step={step}
-                  getAddress={getAddress}
-                  clearCurrentList={clearCurrentList}
-                  currentList={currentList}
-                  address={address}
-                />
-              </motion.div>
-            </AnimatePresence>
-            :
-            <AnimatePresence exitBeforeEnter initial={false}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ scale: 0, opacity: 0, }}
-                transition={{ duration: 2 }}
-              >
-                <Dadata
-                  step={step}
-                  address={address}
-                  object={object}
-                />
-              </motion.div>
-            </AnimatePresence>
-        }
+      <Button
+        variant="text"
+      >
+        адреса нет в списке
+      </Button>
+      <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
+        <Dadata
+          object={object}
+        />
+        <Cords
+          object={object}
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          step={step}
+        />
+      </form>
     </>
   )
 }

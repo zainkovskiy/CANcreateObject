@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
@@ -8,23 +8,8 @@ import { TextFieldForm } from "components/TextFieldForm";
 import './Cords.scss';
 
 export function Cords(props) {
-  const { object, step, form } = props;
+  const { object, step, register, setValue, errors} = props;
   const [point, setPoint] = useState(object?.lat && object?.lng ? [object.lat, object.lng] : [])
-  const {
-    register,
-    formState: { errors, isDirty },
-    handleSubmit,
-    setValue,
-  } = useForm({
-    defaultValues: {
-      lat: object.lat || 55.030204,
-      lng: object.lng || 82.920430,
-      reqLandCadastralNumber: object.reqLandCadastralNumber || '',
-      reqObjectCadastralNumber: object.reqObjectCadastralNumber || '',
-
-    },
-    mode: 'onSubmit',
-  })
 
   const handleClick = (event) => {
     const cords = event.get('coords');
@@ -32,23 +17,20 @@ export function Cords(props) {
     setValue('lat', cords[0]);
     setValue('lng', cords[1]);
   }
-
-  const onSubmit = (data) => {
-    console.log(data);
-    form(data);
-    step(object.step + 1)
-  }
+  useEffect(() => {
+    if (object.address?.data?.geo_lat && object.address?.data?.geo_lon){
+      setPoint([object.address.data.geo_lat, object.address.data.geo_lon]);
+      setValue('lat', object.address.data.geo_lat);
+      setValue('lng', object.address.data.geo_lon);
+    }
+  }, [object.address])
 
   return (
     <>
-      <span className='subtitle'>
-        Местоположение
-      </span>
       {
         (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Комната') &&
-        <p className='text attention'>В соответствии с требованиями ЦИАН, необходимо указать координаты с точность до дома. Внимание! В случае ввода не верных координат объект не выгрузится в рекламу</p>
+        <p className='text attention wrapper-grid_fullWidth'>В соответствии с требованиями ЦИАН, необходимо указать координаты с точность до дома. Внимание! В случае ввода не верных координат объект не выгрузится в рекламу</p>
       }
-      <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
         <TextFieldForm
           label='Координаты X*'
           {
@@ -56,8 +38,7 @@ export function Cords(props) {
               required: 'Поле обязательно к заполнению'
             })
           }
-          error={errors?.lat ? true : false}
-          helperText={errors?.lat?.message && errors.lat.message}
+          errors={errors.lat}
         />
         <TextFieldForm
           label='Координаты Y*'
@@ -66,8 +47,7 @@ export function Cords(props) {
               required: 'Поле обязательно к заполнению'
             })
           }
-          error={errors?.lng ? true : false}
-          helperText={errors?.lng?.message && errors.lng.message}
+          errors={errors.lng}
         />
         {
           (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Змельный участок') &&
@@ -78,8 +58,7 @@ export function Cords(props) {
                 required: 'Поле обязательно к заполнению'
               })
             }
-            error={errors?.reqLandCadastralNumber ? true : false}
-            helperText={errors?.reqLandCadastralNumber?.message && errors.reqLandCadastralNumber.message}
+            errors={errors.reqLandCadastralNumber}
           />
         }
         {
@@ -91,8 +70,7 @@ export function Cords(props) {
                 required: 'Поле обязательно к заполнению'
               })
             }
-            error={errors?.reqObjectCadastralNumber ? true : false}
-            helperText={errors?.reqObjectCadastralNumber?.message && errors.reqObjectCadastralNumber.message}
+            errors={errors.reqObjectCadastralNumber}
           />
         }
         <div style={{ gridColumnStart: 1, gridColumnEnd: 3, height: 400 }}>
@@ -123,10 +101,10 @@ export function Cords(props) {
           <Button
             variant="contained"
             type='submit'
-          >submit
+            disabled={point.length === 0}
+          >next
           </Button>
         </div>
-      </form>
     </>
   )
 } 

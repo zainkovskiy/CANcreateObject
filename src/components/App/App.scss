@@ -40,7 +40,6 @@ body{
   }
 }
 .wrapper-grid{
-  margin: 1rem 0 0 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
@@ -127,6 +126,12 @@ body{
     font-size: 12px;
     white-space: nowrap;
   }
+}
+.MuiTypography-root, .MuiInputLabel-root, .MuiMenuItem-root{
+  font-family: 'Montserrat' !important;
+}
+.MuiTypography-root{
+  opacity: 0.6;
 }
 .inVisible{
   display: none;

@@ -13,6 +13,7 @@ import { TextField } from "@mui/material";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export function About(props) {
   const { object, form, step } = props;
@@ -111,16 +112,22 @@ export function About(props) {
         {
           (object.propertyType !== 'Земельный участок' && object.propertyType !== 'Гараж') &&
           <div className="wrapper-grid_fullWidth">
-            <span className="text text_label">Общее количество комнат</span>
-            <Controller
-              control={control}
-              rules={{ required: 'Поле обязательно к заполнению' }}
-              name='rooms'
-              render={({ field }) => (
-                <ToggleGroupForm
-                  {...field}
+            <FormControlLabel
+              label='Общее количество комнат'
+              labelPlacement="top"
+              style={{margin: 0}}
+              control={
+                <Controller
+                  control={control}
+                  rules={{ required: 'Поле обязательно к заполнению' }}
+                  name='rooms'
+                  render={({ field }) => (
+                    <ToggleGroupForm
+                      {...field}
+                    />
+                  )}
                 />
-              )}
+              }
             />
             <span className="text text_error">{errors?.rooms?.message ? errors.rooms.message : ''}</span>
           </div>
@@ -393,62 +400,61 @@ export function About(props) {
         }
         {
           (object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Дом, коттедж, дача') &&
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
-          >
-            {
-              object.propertyType === 'Переуступка ДДУ' &&
-              <span className="text text_label">
-                Дата сдачи (квартал, год)
-              </span>
-            }
-            <div
-              style={{ display: 'flex', gap: '0.5rem' }}
-            >
-              {
-                object.propertyType === 'Переуступка ДДУ' &&
+          <div className={object.propertyType === 'Переуступка ДДУ' ? "wrapper-grid_fullWidth" : ''}>
+            <FormControlLabel
+              label={object.propertyType === 'Переуступка ДДУ' ? 'Дата сдачи (квартал, год)' : ''}
+              labelPlacement="top"
+              style={{ margin: 0, width: '100%' }}
+              control={<div style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
+                {
+                  object.propertyType === 'Переуступка ДДУ' &&
+                  <Controller
+                    name='quarter'
+                    control={control}
+                    render={({ field }) =>
+                      <ToggleButtonGroup
+                        color="primary"
+                        exclusive
+                        {...field}
+                        size='small'
+                        fullWidth
+                      >
+                        <ToggleButton value="1" style={{ width: '100%' }}>I</ToggleButton>
+                        <ToggleButton value="2" style={{ width: '100%' }}>II</ToggleButton>
+                        <ToggleButton value="3" style={{ width: '100%' }}>III</ToggleButton>
+                        <ToggleButton value="4" style={{ width: '100%' }}>IV</ToggleButton>
+                      </ToggleButtonGroup>
+                    }
+                  />
+                }
+
                 <Controller
-                  name='quarter'
                   control={control}
-                  render={({ field }) =>
-                    <ToggleButtonGroup
-                      color="primary"
-                      exclusive
-                      {...field}
-                      size='small'
-                    >
-                      <ToggleButton value="1">I</ToggleButton>
-                      <ToggleButton value="2">II</ToggleButton>
-                      <ToggleButton value="3">III</ToggleButton>
-                      <ToggleButton value="4">IV</ToggleButton>
-                    </ToggleButtonGroup>
-                  }
+                  name="buildYear"
+                  rules={{
+                    validate: event => event.isSameOrAfter(moment(), 'year') || 'Не меньше чем текущий'
+                  }}
+                  render={({ field }) => (
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DatePicker
+                        views={['year']}
+                        label={object.propertyType === 'Переуступка ДДУ' ? 'Год' : 'Год постройки'}
+                        {...field}
+                        renderInput={(params) =>
+                          <TextField {...params}
+                            size="small"
+                            autoComplete='off'
+                            helperText={errors?.buildYear?.message ? errors?.buildYear?.message : ''}
+                            error={errors?.buildYear ? true : false}
+                            fullWidth
+                          />}
+                      />
+                    </LocalizationProvider>
+                  )}
                 />
+              </div>
               }
-              <Controller
-                control={control}
-                name="buildYear"
-                rules={{
-                  validate: event => event.isSameOrAfter(moment(), 'year') || 'Не меньше чем текущий'
-                }}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DatePicker
-                      views={['year']}
-                      label={object.propertyType === 'Переуступка ДДУ' ? 'Год' : 'Год постройки'}
-                      {...field}
-                      renderInput={(params) =>
-                        <TextField {...params}
-                          size="small"
-                          autoComplete='off'
-                          helperText={errors?.buildYear?.message ? errors?.buildYear?.message : ''}
-                          error={errors?.buildYear ? true : false}
-                        />}
-                    />
-                  </LocalizationProvider>
-                )}
-              />
-            </div>
+            />
           </div>
         }
         <div className='grid-buttons'>

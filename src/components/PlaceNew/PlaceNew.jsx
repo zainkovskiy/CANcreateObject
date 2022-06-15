@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { SearchField } from "components/SearchField";
 
+import { Cords } from 'components/Cords';
+
 export function PlaceNew(props) {
   const { object, form, step, currentList, getComplex } = props;
   const [overallList, setOverallList] = useState([]);
@@ -27,6 +29,8 @@ export function PlaceNew(props) {
       reqStreet: object.reqStreet || '',
       appartmentNumber: object.appartmentNumber || '',
       reqFlat: object.reqFlat || '',
+      lat: object.lat || '55.0415000',
+      lng: object.lng || '82.9346000',
     },
     mode: 'onSubmit',
   })
@@ -70,21 +74,16 @@ export function PlaceNew(props) {
 
   return (
     <>
-      <span className='subtitle'>
-        Адрес
-        <Button
-          variant="text"
-        >жк нет в списке
-        </Button>
-      </span>
+      <Button
+        variant="text"
+      >
+        жк нет в списке
+      </Button>
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
         <Controller
           control={control}
-          {
-          ...register('reqComplex', {
-            required: 'Поле обязательно к заполнению'
-          })
-          }
+          name='reqComplex'
+          rules={{ required: true }}
           render={({ field }) => (
             <div className='wrapper-grid__input'>
               <TextField
@@ -184,19 +183,13 @@ export function PlaceNew(props) {
           })
           }
         />
-        <div className='grid-buttons'>
-          <Button
-            variant="contained"
-            type='button'
-            onClick={() => { form(getValues()), step(object.step - 1) }}
-          >back
-          </Button>
-          <Button
-            variant="contained"
-            type='submit'
-          >submit
-          </Button>
-        </div>
+        <Cords
+          object={object}
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          step={step}
+        />
       </form>
     </>
   )
