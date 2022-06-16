@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 
-import { address, form } from 'actions/object';
+import { address } from 'actions/object';
 
 
 import './Dadata.scss';
@@ -12,7 +12,7 @@ import './Dadata.scss';
 export function Dadata(props) {
   const { object } = props;
   const dispatch = useDispatch();
-  const [addressDadata, setAddressDadata] = useState(object.addressType ? '' : object.address);
+  const [addressDadata, setAddressDadata] = useState(object.address || '');
 
   useEffect(() => {
     console.log(addressDadata);

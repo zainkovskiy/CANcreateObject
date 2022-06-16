@@ -224,7 +224,7 @@ class PlaceContainer extends PureComponent {
     this.setState({ currentList: [] })
   }
   render() {
-    const { object, step, address, form } = this.props;
+    const { object, step, form } = this.props;
     return (
       <>
         <span className='subtitle'>
@@ -236,7 +236,6 @@ class PlaceContainer extends PureComponent {
               object={object}
               step={step}
               form={form}
-              address={address}
               currentList={this.state.currentList}
               getComplex={this.getComplex}
             /> :

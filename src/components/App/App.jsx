@@ -15,16 +15,15 @@ export function App({ step }) {
   useEffect(() => {
     navigate(`step${step}`)
   }, [step])
-
   return (
     <>
       <Routes>
-        <Route path='/step0' element={<TypeRedux />} />
-        <Route path='/step1' element={<PlaceRedux />} />
+        <Route path='step0' element={<TypeRedux />} />
+        <Route path='step1' element={<PlaceRedux />} />
         {/* <Route path='/step2' element={<CordsRedux />} /> */}
-        <Route path='/step2' element={<AboutRedux />} />
-        <Route path='/step3' element={<AdditionRedux />} />
-        <Route path='/step4' element={<FinalPageRedux />} />
+        <Route path='step2' element={<AboutRedux />} />
+        <Route path='step3' element={<AdditionRedux />} />
+        <Route path='step4' element={<FinalPageRedux />} />
         <Route path="*" element={<div className='text'>page not found</div>} />
       </Routes>
     </>
