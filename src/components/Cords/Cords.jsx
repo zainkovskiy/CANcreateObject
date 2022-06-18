@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from 'react-hook-form';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 import Button from "@mui/material/Button";
@@ -9,7 +8,8 @@ import './Cords.scss';
 
 export function Cords(props) {
   const { object, step, register, setValue, errors} = props;
-  const [point, setPoint] = useState(object?.lat && object?.lng ? [object.lat, object.lng] : [])
+  const [point, setPoint] = useState(object?.lat && object?.lng ? [object.lat, object.lng] : []);
+  const [zoom, setZoom] = useState(10);
 
   const handleClick = (event) => {
     const cords = event.get('coords');
@@ -20,6 +20,7 @@ export function Cords(props) {
   useEffect(() => {
     if (object.address?.data?.geo_lat && object.address?.data?.geo_lon){
       setPoint([object.address.data.geo_lat, object.address.data.geo_lon]);
+      setZoom(15);
       setValue('lat', object.address.data.geo_lat);
       setValue('lng', object.address.data.geo_lon);
     }
@@ -28,7 +29,7 @@ export function Cords(props) {
   return (
     <>
       {
-        (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ' || object.propertyType === 'Комната') &&
+        (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Земельный участок' ) &&
         <p className='text attention wrapper-grid_fullWidth'>В соответствии с требованиями ЦИАН, необходимо указать координаты с точность до дома. Внимание! В случае ввода не верных координат объект не выгрузится в рекламу</p>
       }
         <TextFieldForm
@@ -76,7 +77,7 @@ export function Cords(props) {
         <div style={{ gridColumnStart: 1, gridColumnEnd: 3, height: 400 }}>
           <YMaps>
             <Map
-              defaultState={{ center: point.length > 0 ? point : [55.030204, 82.920430], zoom: 10 }}
+              state={{ center: point.length > 0 ? point : [55.030204, 82.920430], zoom }}
               width={'100%'}
               height={400}
               onCLick={event => handleClick(event)}

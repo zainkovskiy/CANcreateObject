@@ -47,18 +47,26 @@ export function PlaceAll(props) {
       >
         адреса нет в списке
       </Button>
+      {
+        object?.address?.data?.qc_geo &&
+        <span className="text">
+          {
+            coordsInfo[object.address.data.qc_geo]
+          }
+        </span>
+      }
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
         {
           absentAddress ?
             <>
-                <div className='wrapper-grid_fullWidth'> 
-                  <Uploader
-                    object={object}
-                    register={register}
-                    setValue={setValue}
-                  />
-                  <span className='text_error'>{errors?.file?.message ? errors.file.message : ''}</span>
-                </div>
+              <div className='wrapper-grid_fullWidth'>
+                <Uploader
+                  object={object}
+                  register={register}
+                  setValue={setValue}
+                />
+                <span className='text_error'>{errors?.file?.message ? errors.file.message : ''}</span>
+              </div>
               <TextField
                 autoComplete="off"
                 label='Адрес'
@@ -78,19 +86,22 @@ export function PlaceAll(props) {
               object={object}
             />
         }
-        <TextField
-          autoComplete="off"
-          label='Номер квартиры'
-          size="small"
-          fullWidth
-          error={errors?.reqFlat ? true : false}
-          helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
-          {
-          ...register('reqFlat', {
-            required: 'Поле обязательно к заполнению'
-          })
-          }
-        />
+        {
+          (object.propertyType === 'Квартира' || object.propertyType === 'Комната') &&
+          < TextField
+            autoComplete="off"
+            label='Номер квартиры'
+            size="small"
+            fullWidth
+            error={errors?.reqFlat ? true : false}
+            helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
+            {
+            ...register('reqFlat', {
+              required: 'Поле обязательно к заполнению'
+            })
+            }
+          />
+        }
         <Cords
           object={object}
           register={register}
@@ -101,4 +112,13 @@ export function PlaceAll(props) {
       </form>
     </>
   )
+}
+
+const coordsInfo = {
+  '0': 'Точные координаты',
+  '1': 'Координаты указаы до ближайщего дома',
+  '2': 'Координаты указаы до улицы',
+  '3': 'Координаты указаы до населенного пункта',
+  '4': 'Координаты указаы до города',
+  '5': 'Координаты не определены',
 }
