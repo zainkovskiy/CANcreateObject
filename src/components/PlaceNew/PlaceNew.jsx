@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import Button from "@mui/material/Button";
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { TextField } from "@mui/material";
 import { SearchField } from "components/SearchField";
 
@@ -102,7 +103,7 @@ export function PlaceNew(props) {
                 render={({ field }) =>
                   <TextField
                     autoComplete='off'
-                    label='ЖК*'
+                    label='ЖК'
                     size='small'
                     fullWidth
                     {...field}
@@ -128,7 +129,7 @@ export function PlaceNew(props) {
                 }
               />
               <Controller
-                name='newHouseDeveloper'
+                name='reqFlat'
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) =>
@@ -139,11 +140,7 @@ export function PlaceNew(props) {
                     fullWidth
                     error={errors?.reqFlat ? true : false}
                     helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
-                    {
-                    ...register('reqFlat', {
-                      required: 'Поле обязательно к заполнению'
-                    })
-                    }
+                    {...field}
                   />
                 }
               />
@@ -154,6 +151,26 @@ export function PlaceNew(props) {
                   setValue={setValue}
                 />
                 <span className='text_error'>{errors?.file?.message ? errors.file.message : ''}</span>
+              </div>
+              <div className='wrapper-grid_fullWidth'>
+                <FormControlLabel
+                  label='Комментарий'
+                  labelPlacement="top"
+                  style={{ margin: 0 }}
+                  control={
+                    <textarea
+                      className='form__textArea'
+                      cols="30"
+                      rows="10"
+                      {
+                      ...register('comment', {
+                        required: 'Поле обязательно к заполнению'
+                      })
+                      }
+                    ></textarea>
+                  }
+                />
+                <span className='text_error'>{errors?.comment?.message ? errors.comment.message : ''}</span>
               </div>
             </> :
             <>
@@ -168,7 +185,7 @@ export function PlaceNew(props) {
                       onBlur={(e) => { checkRightValue(e, field.onChange) }}
                       inputRef={field.ref}
                       autoComplete='off'
-                      label='ЖК*'
+                      label='ЖК'
                       size='small'
                       fullWidth
                       name='reqComplex'

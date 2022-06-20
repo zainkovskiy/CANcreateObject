@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { Dadata } from 'components/Dadata';
 import { Cords } from 'components/Cords';
@@ -24,9 +25,10 @@ export function PlaceAll(props) {
   } = useForm({
     defaultValues: {
       reqFlat: object?.reqFlat || '',
-      newAddress: object?.newAddress || '',
       lat: object?.lat || '55.0415000',
       lng: object?.lng || '82.9346000',
+      comment: object?.comment || '',
+      newAddress: object?.newAddress || '',
       reqLandCadastralNumber: object?.reqLandCadastralNumber || '',
       reqObjectCadastralNumber: object?.reqObjectCadastralNumber || '',
     },
@@ -60,6 +62,21 @@ export function PlaceAll(props) {
           absentAddress ?
             <>
               <div className='wrapper-grid_fullWidth'>
+                <TextField
+                  autoComplete="off"
+                  label='Адрес'
+                  size="small"
+                  fullWidth
+                  error={errors?.newAddress ? true : false}
+                  helperText={errors?.newAddress?.message ? errors.newAddress.message : ''}
+                  {
+                  ...register('newAddress', {
+                    required: 'Поле обязательно к заполнению'
+                  })
+                  }
+                />
+              </div>
+              <div className='wrapper-grid_fullWidth'>
                 <Uploader
                   object={object}
                   register={register}
@@ -67,40 +84,31 @@ export function PlaceAll(props) {
                 />
                 <span className='text_error'>{errors?.file?.message ? errors.file.message : ''}</span>
               </div>
-              <TextField
-                autoComplete="off"
-                label='Адрес'
-                size="small"
-                fullWidth
-                error={errors?.newAddress ? true : false}
-                helperText={errors?.newAddress?.message ? errors.newAddress.message : ''}
-                {
-                ...register('newAddress', {
-                  required: 'Поле обязательно к заполнению'
-                })
-                }
-              />
+              <div className='wrapper-grid_fullWidth'>
+                <FormControlLabel
+                  label='Комментарий'
+                  labelPlacement="top"
+                  style={{ margin: 0 }}
+                  control={
+                    <textarea
+                      className='form__textArea'
+                      cols="30"
+                      rows="10"
+                      {
+                      ...register('comment', {
+                        required: 'Поле обязательно к заполнению'
+                      })
+                      }
+                    ></textarea>
+                  }
+                />
+                <span className='text_error'>{errors?.comment?.message ? errors.comment.message : ''}</span>
+              </div>
             </>
             :
             <Dadata
               object={object}
             />
-        }
-        {
-          (object.propertyType === 'Квартира' || object.propertyType === 'Комната') &&
-          < TextField
-            autoComplete="off"
-            label='Номер квартиры'
-            size="small"
-            fullWidth
-            error={errors?.reqFlat ? true : false}
-            helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
-            {
-            ...register('reqFlat', {
-              required: 'Поле обязательно к заполнению'
-            })
-            }
-          />
         }
         <Cords
           object={object}

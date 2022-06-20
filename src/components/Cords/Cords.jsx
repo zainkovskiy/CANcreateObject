@@ -33,7 +33,7 @@ export function Cords(props) {
         <p className='text attention wrapper-grid_fullWidth'>В соответствии с требованиями ЦИАН, необходимо указать координаты с точность до дома. Внимание! В случае ввода не верных координат объект не выгрузится в рекламу</p>
       }
         <TextFieldForm
-          label='Координаты X*'
+          label='Координаты X'
           {
             ...register('lat', {
               required: 'Поле обязательно к заполнению'
@@ -42,7 +42,7 @@ export function Cords(props) {
           errors={errors.lat}
         />
         <TextFieldForm
-          label='Координаты Y*'
+          label='Координаты Y'
           {
             ...register('lng', {
               required: 'Поле обязательно к заполнению'
@@ -53,7 +53,7 @@ export function Cords(props) {
         {
           (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Змельный участок') &&
           <TextFieldForm
-            label='Кадастровый номер участка*'
+            label='Кадастровый номер участка'
             {
               ...register('reqLandCadastralNumber', {
                 required: 'Поле обязательно к заполнению'
@@ -65,7 +65,7 @@ export function Cords(props) {
         {
           object.propertyType === 'Дом, коттедж, дача' &&
           <TextFieldForm
-            label='Кадастровый номер объекта*'
+            label='Кадастровый номер объекта'
             {
               ...register('reqObjectCadastralNumber', {
                 required: 'Поле обязательно к заполнению'

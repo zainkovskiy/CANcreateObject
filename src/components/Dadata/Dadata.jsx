@@ -28,7 +28,7 @@ export function Dadata(props) {
         value={addressDadata}
         onChange={(e) => { setAddressDadata(e) }}
         filterFromBound={'region'}
-        filterToBound={'house'}
+        filterToBound={'flat'}
         inputProps={
           {
             placeholder: 'Введите адрес',
