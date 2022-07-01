@@ -10,7 +10,7 @@ import { address } from 'actions/object';
 import './Dadata.scss';
 
 export function Dadata(props) {
-  const { object } = props;
+  const { object, addressError } = props;
   const dispatch = useDispatch();
   const [addressDadata, setAddressDadata] = useState(object.address || '');
 
@@ -28,7 +28,7 @@ export function Dadata(props) {
         value={addressDadata}
         onChange={(e) => { setAddressDadata(e) }}
         filterFromBound={'region'}
-        filterToBound={'flat'}
+        filterToBound={'house'}
         inputProps={
           {
             placeholder: 'Введите адрес',
@@ -36,6 +36,10 @@ export function Dadata(props) {
           }
         }
       />
+      {
+        (!object.address && addressError) &&
+        <span className="text text_error ">Введите адрес</span>
+      }
     </div>
   )
 }

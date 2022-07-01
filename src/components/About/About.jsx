@@ -41,7 +41,7 @@ export function About(props) {
 
   const onSubmit = (data) => {
     form(data);
-    step(object.step + 1)
+    step('addition')
   }
 
   return (
@@ -461,7 +461,7 @@ export function About(props) {
           <Button
             variant="contained"
             type='button'
-            onClick={() => { form(getValues()), step(object.step - 1) }}
+            onClick={() => { form(getValues()), step('place') }}
           >back
           </Button>
           <Button

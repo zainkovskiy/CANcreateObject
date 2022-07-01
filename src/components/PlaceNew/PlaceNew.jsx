@@ -41,8 +41,13 @@ export function PlaceNew(props) {
 
   const onSubmit = (data) => {
     console.log(data);
-    form(data);
-    step(object.step + 1)
+    if (object.absentComplex) {
+      form(data);
+      step('about')
+    }
+    if (object.address) {
+      step('check')
+    }
   }
 
   useEffect(() => {
@@ -76,12 +81,13 @@ export function PlaceNew(props) {
   }
 
   const handleSelectItem = (item) => {
+    console.log(item);
     setOpenComplex(false);
     dispatch(address(item));
     setOverallList([...overallList, `${item.reqComplex} ${item.appartmentNumber}`]);
-    for (let key in item) {
-      setValue(key, item[key])
-    }
+    // for (let key in item) {
+    //   setValue(key, item[key])
+    // }
   }
 
   return (
@@ -246,19 +252,7 @@ export function PlaceNew(props) {
                 fullWidth
                 value={object?.address?.reqStreet ? object?.address?.reqStreet : ''}
               />
-              <TextField
-                autoComplete="off"
-                label='Номер квартиры'
-                size="small"
-                fullWidth
-                error={errors?.reqFlat ? true : false}
-                helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
-                {
-                ...register('reqFlat', {
-                  required: 'Поле обязательно к заполнению'
-                })
-                }
-              />
+              <div></div>
             </>
         }
         <Cords

@@ -31,8 +31,8 @@ class PlaceContainer extends PureComponent {
             "reqArea": "Дзержинский",
             "reqStreet": "Россия, Новосибирск, Рябиновая улица, 14/1",
             "appartmentNumber": 1,
-            'lat': '55.0415000',
-            'lng': '82.9346000'
+            'lat': '55.06204894469935',
+            'lng': '82.93178859524537'
           },
           {
             "idresidential_complex": "92",

@@ -31,7 +31,7 @@ export function Addition(props) {
   const onSubmit = (data) => {
     console.log(data);
     form(data);
-    step(object.step + 1)
+    step('final')
   }
   return (
     <>

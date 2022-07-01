@@ -10,7 +10,7 @@ export function FinalPage(props) {
       <div className="final">
         <p className="final__subtitle text">Тип объекта</p>
         <div className="final__block-text">
-          <p className="final__row text">Тип: <span>{object.propertyType}</span></p>
+          <p className="final__row text">Тип: <span>{object?.propertyType}</span></p>
         </div>
       </div>
       <div className="final">
@@ -18,12 +18,12 @@ export function FinalPage(props) {
           <Button variant="text">редактировать</Button>
         </p>
         <div className="final__block-text">
-          <p className="final__row text">Регион: <span>{object.address.reqRegion}</span></p>
-          <p className="final__row text">Населенный пункт: <span>{object.address.reqCity}</span></p>
+          {/* <p className="final__row text">Регион: <span>{object?.address.reqRegion}</span></p>
+          <p className="final__row text">Населенный пункт: <span>{object.address?.reqCity}</span></p>
           <p className="final__row text">Район: <span>{object.address.reqArea}</span></p>
           <p className="final__row text">Улица: <span>{object.address.reqStreet}</span></p>
           <p className="final__row text">Номер дома: <span>{object.address.appartmentNumber}</span></p>
-          <p className="final__row text">Номер квартиры: <span>{object.address.reqFlat}</span></p>
+          <p className="final__row text">Номер квартиры: <span>{object.address.reqFlat}</span></p> */}
         </div>
       </div>
       <div className="final">

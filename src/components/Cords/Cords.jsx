@@ -23,6 +23,11 @@ export function Cords(props) {
       setZoom(15);
       setValue('lat', object.address.data.geo_lat);
       setValue('lng', object.address.data.geo_lon);
+    } else if (object?.address?.lat && object?.address?.lng){
+      setPoint([object.address.lat, object.address?.lng]);
+      setZoom(15);
+      setValue('lat', object.address.lat);
+      setValue('lng', object.address?.lng);
     }
   }, [object.address])
 
@@ -96,7 +101,7 @@ export function Cords(props) {
           <Button
             variant="contained"
             type='button'
-            onClick={() => { step(object.step - 1) }}
+            onClick={() => { step('') }}
           >back
           </Button>
           <Button

@@ -9,21 +9,23 @@ import { CordsRedux } from 'containers/CordsContainer';
 import { AboutRedux } from 'containers/AboutContainer';
 import { AdditionRedux } from 'containers/AdditionContainer';
 import { FinalPageRedux } from 'containers/FinalPageContainer';
+import { CheckRedux } from 'containers/CheckContainer';
 
 export function App({ step }) {
   const navigate = useNavigate();
   useEffect(() => {
-    navigate(`step${step}`)
+    navigate(step)
   }, [step])
   return (
     <>
       <Routes>
-        <Route path='step0' element={<TypeRedux />} />
-        <Route path='step1' element={<PlaceRedux />} />
+        <Route path='/' element={<TypeRedux />} />
+        <Route path='place' element={<PlaceRedux />} />
         {/* <Route path='/step2' element={<CordsRedux />} /> */}
-        <Route path='step2' element={<AboutRedux />} />
-        <Route path='step3' element={<AdditionRedux />} />
-        <Route path='step4' element={<FinalPageRedux />} />
+        <Route path='about' element={<AboutRedux />} />
+        <Route path='addition' element={<AdditionRedux />} />
+        <Route path='final' element={<FinalPageRedux />} />
+        <Route path='check' element={<CheckRedux />} />
         <Route path="*" element={<div className='text'>page not found</div>} />
       </Routes>
     </>

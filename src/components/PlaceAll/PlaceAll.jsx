@@ -12,6 +12,7 @@ import { Uploader } from 'components/Uploader';
 export function PlaceAll(props) {
   const { object, step, form } = props;
   const [absentAddress, setAbsentAdress] = useState(object?.absentAddress || false)
+  const [addressError, setAdressError] = useState(false)
 
   useEffect(() => {
     form({ absentAddress: absentAddress })
@@ -36,9 +37,17 @@ export function PlaceAll(props) {
   })
 
   const onSubmit = (data) => {
-    console.log(data);
-    form(data);
-    step(object.step + 1)
+    if (!object.address && !object.absentAddress) {
+      setAdressError(true);
+      return
+    }
+    if (object.absentAddress) {
+      form(data);
+      step('about')
+    }
+    if (object.address) {
+      step('check')
+    }
   }
 
   return (
@@ -107,6 +116,7 @@ export function PlaceAll(props) {
             </>
             :
             <Dadata
+              addressError={addressError}
               object={object}
             />
         }

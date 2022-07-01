@@ -61,7 +61,7 @@ export function Type(props) {
           disabled={!object.propertyType}
           style={{ alignSelf: 'flex-end' }}
           variant="contained"
-          onClick={() => step(object.step + 1)}
+          onClick={() => step('place')}
         >
           далее
         </Button>
