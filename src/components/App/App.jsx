@@ -14,18 +14,18 @@ import { CheckRedux } from 'containers/CheckContainer';
 export function App({ step }) {
   const navigate = useNavigate();
   useEffect(() => {
-    navigate(step)
+    navigate(`dev/createObjectRedax/${step}`)
   }, [step])
   return (
     <>
       <Routes>
-        <Route path='/' element={<TypeRedux />} />
-        <Route path='place' element={<PlaceRedux />} />
+        <Route path='dev/createObjectRedax/' element={<TypeRedux />} />
+        <Route path='dev/createObjectRedax/place' element={<PlaceRedux />} />
         {/* <Route path='/step2' element={<CordsRedux />} /> */}
-        <Route path='about' element={<AboutRedux />} />
-        <Route path='addition' element={<AdditionRedux />} />
-        <Route path='final' element={<FinalPageRedux />} />
-        <Route path='check' element={<CheckRedux />} />
+        <Route path='dev/createObjectRedax/about' element={<AboutRedux />} />
+        <Route path='dev/createObjectRedax/addition' element={<AdditionRedux />} />
+        <Route path='dev/createObjectRedax/final' element={<FinalPageRedux />} />
+        <Route path='dev/createObjectRedax/check' element={<CheckRedux />} />
         <Route path="*" element={<div className='text'>page not found</div>} />
       </Routes>
     </>

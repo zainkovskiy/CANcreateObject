@@ -20,59 +20,59 @@ class CheckContainer extends PureComponent {
     currentObject: ''
   }
   requestCheck = async (float) => {
-    const { object } = this.props;
+    const { object, nextStep } = this.props;
     this.setState({ load: !this.state.load });
-    // try {
-    // const res = await axios.post('https://hs-01.centralnoe.ru/Project-Selket-Main/Servers/Creator/Controller.php', {
-    //   action: 'check',
-    //   object: object,
-    //   float: float
-    // });
-    //   if (!res.data.result) {
-
-    //   } else {
-
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // } finally {
-    //   this.setState({ load: !this.state.load });
-    // }
-    this.setState({
-      answer: {
-        "action": "check",
-        "result": true,
-        "overlap": "full",
-        "data": [
-          {
-            "reqNumber": 6516516516,
-            "photo": "https://zhenomaniya.ru/wp-content/uploads/2018/09/1-2.jpg",
-            "address": "Новосибирск, ул Ватутина 22",
-            "docType": "free",
-            "areas": "50/15/48",
-            "overlap": "full"
-          },
-          {
-            "reqNumber": 651651651,
-            "photo": "https://stihi.ru/pics/2015/01/08/4035.jpg",
-            "address": "Новосибирск, ул Ватутина 34",
-            "docType": "exclusive",
-            "areas": "50/15/48",
-            "overlap": "half"
-          },
-          {
-            "reqNumber": 651651651651,
-            "photo": "http://www.mice-award.ru/media/images/products/153/85379-icon.jpg",
-            "address": "Новосибирск, ул Ватутина 122",
-            "docType": "adv",
-            "areas": "50/15/48",
-            "overlap": "half"
-          }
-        ]
+    try {
+      const res = await axios.post('https://hs-01.centralnoe.ru/Project-Selket-Main/Servers/Creator/Controller.php', {
+        action: 'check',
+        object: object,
+        float: float
+      });
+      if (!res.data.result) {
+        this.setState({ answer: res.data })
+      } else {
+        nextStep('about')
       }
-    }, () => {
-      this.setState({ load: !this.state.load })
-    })
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.setState({ load: !this.state.load });
+    }
+    // this.setState({
+    //   answer: {
+    //     "action": "check",
+    //     "result": true,
+    //     "overlap": "full",
+    //     "data": [
+    //       {
+    //         "reqNumber": 6516516516,
+    //         "photo": "https://zhenomaniya.ru/wp-content/uploads/2018/09/1-2.jpg",
+    //         "address": "Новосибирск, ул Ватутина 22",
+    //         "docType": "free",
+    //         "areas": "50/15/48",
+    //         "overlap": "full"
+    //       },
+    //       {
+    //         "reqNumber": 651651651,
+    //         "photo": "https://stihi.ru/pics/2015/01/08/4035.jpg",
+    //         "address": "Новосибирск, ул Ватутина 34",
+    //         "docType": "exclusive",
+    //         "areas": "50/15/48",
+    //         "overlap": "half"
+    //       },
+    //       {
+    //         "reqNumber": 651651651651,
+    //         "photo": "http://www.mice-award.ru/media/images/products/153/85379-icon.jpg",
+    //         "address": "Новосибирск, ул Ватутина 122",
+    //         "docType": "adv",
+    //         "areas": "50/15/48",
+    //         "overlap": "half"
+    //       }
+    //     ]
+    //   }
+    // }, () => {
+    //   this.setState({ load: !this.state.load })
+    // })
   }
   openWindow = () => {
     this.setState({ modal: !this.state.modal })
@@ -86,8 +86,12 @@ class CheckContainer extends PureComponent {
     this.setState({ currentObject: '' });
   }
   selectObject = (object) => {
+    const { nextStep } = this.props;
     this.openWindow();
     this.setState({ currentObject: object })
+    setTimeout(() => {
+      nextStep('about')
+    }, 1500)
   }
   render() {
     const { nextStep } = this.props;
