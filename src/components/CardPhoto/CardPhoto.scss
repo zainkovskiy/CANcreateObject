@@ -1,0 +1,24 @@
+.photos{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minMax(300px, 1fr));
+  gap: 1rem;
+}
+.photo{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  &__icon{
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: greenyellow;
+    display: flex;
+    border-radius: 30px;
+  }
+  &__img{
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+}

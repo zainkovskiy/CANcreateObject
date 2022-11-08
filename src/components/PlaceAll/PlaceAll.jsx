@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import Button from "@mui/material/Button";
@@ -9,15 +10,21 @@ import { Dadata } from 'components/Dadata';
 import { Cords } from 'components/Cords';
 import { Uploader } from 'components/Uploader';
 
-export function PlaceAll(props) {
-  const { object, step, form } = props;
-  const [absentAddress, setAbsentAdress] = useState(object?.absentAddress || false)
-  const [addressError, setAdressError] = useState(false)
+import { form, step } from 'actions/object';
+
+export function PlaceAll() {
+  const dispatch = useDispatch();
+  const object = useSelector((state) => state.object.get('entries')).toJS();
+  const [absentAddress, setAbsentAddress] = useState(object?.absentAddress || false)
+  const [addressError, setAddressError] = useState(false)
 
   useEffect(() => {
-    form({ absentAddress: absentAddress })
+    setAbsentAddressValue()
   }, [absentAddress])
 
+  const setAbsentAddressValue = () => {
+    dispatch(form({ absentAddress: absentAddress }));
+  }
   const {
     register,
     formState: { errors },
@@ -38,15 +45,17 @@ export function PlaceAll(props) {
 
   const onSubmit = (data) => {
     if (!object.address && !object.absentAddress) {
-      setAdressError(true);
+      setAddressError(true);
       return
     }
     if (object.absentAddress) {
-      form(data);
-      step('about')
+      dispatch(form(data));
+      dispatch(step('about'))
+      return
     }
     if (object.address) {
-      step('check')
+      dispatch(step('check'));
+      return
     }
   }
 
@@ -54,7 +63,7 @@ export function PlaceAll(props) {
     <>
       <Button
         variant="text"
-        onClick={() => setAbsentAdress(!absentAddress)}
+        onClick={() => setAbsentAddress(!absentAddress)}
       >
         адреса нет в списке
       </Button>
@@ -121,11 +130,9 @@ export function PlaceAll(props) {
             />
         }
         <Cords
-          object={object}
           register={register}
           setValue={setValue}
           errors={errors}
-          step={step}
         />
       </form>
     </>

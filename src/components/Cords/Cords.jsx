@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 import Button from "@mui/material/Button";
@@ -6,10 +7,13 @@ import { TextFieldForm } from "components/TextFieldForm";
 
 import './Cords.scss';
 
-export function Cords(props) {
-  const { object, step, register, setValue, errors} = props;
+export const Cords = (props) => {
+  const { register, setValue, errors} = props;
+  const object = useSelector((state) => state.object.get('entries')).toJS();
   const [point, setPoint] = useState(object?.lat && object?.lng ? [object.lat, object.lng] : []);
-  const [zoom, setZoom] = useState(10);
+  // const [zoom, setZoom] = useState(10);
+  const zoom = 12;
+  const objectRef = useRef(null);
 
   const handleClick = (event) => {
     const cords = event.get('coords');
@@ -18,18 +22,28 @@ export function Cords(props) {
     setValue('lng', cords[1]);
   }
   useEffect(() => {
+    console.log('update')
+    if (JSON.stringify(objectRef.current) === JSON.stringify(object.address)){
+      return
+    }
+    objectRef.current = object.address;
+    setCordsInputs();
+  }, [object.address])
+
+  const setCordsInputs = () => {
+    console.log('here');
     if (object.address?.data?.geo_lat && object.address?.data?.geo_lon){
       setPoint([object.address.data.geo_lat, object.address.data.geo_lon]);
-      setZoom(15);
+      // setZoom(15);
       setValue('lat', object.address.data.geo_lat);
       setValue('lng', object.address.data.geo_lon);
     } else if (object?.address?.lat && object?.address?.lng){
       setPoint([object.address.lat, object.address?.lng]);
-      setZoom(15);
+      // setZoom(15);
       setValue('lat', object.address.lat);
       setValue('lng', object.address?.lng);
     }
-  }, [object.address])
+  }
 
   return (
     <>
@@ -98,16 +112,11 @@ export function Cords(props) {
           </YMaps>
         </div>
         <div className='grid-buttons'>
-          <Button
-            variant="contained"
-            type='button'
-            onClick={() => { step('') }}
-          >back
-          </Button>
+        <div></div>
           <Button
             variant="contained"
             type='submit'
-            disabled={point.length === 0}
+            // disabled={point.length === 0} 
           >next
           </Button>
         </div>

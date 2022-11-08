@@ -10,22 +10,27 @@ import { AboutRedux } from 'containers/AboutContainer';
 import { AdditionRedux } from 'containers/AdditionContainer';
 import { FinalPageRedux } from 'containers/FinalPageContainer';
 import { CheckRedux } from 'containers/CheckContainer';
+import { StartInfoContainer } from 'containers/StartInfoContainer';
+import { PhotoContainer } from 'containers/PhotoContainer';
 
 export function App({ step }) {
   const navigate = useNavigate();
   useEffect(() => {
+    // navigate(`dev/createObjectRedax/${step}`)
     navigate(`dev/createObjectRedax/${step}`)
   }, [step])
   return (
     <>
       <Routes>
-        <Route path='dev/createObjectRedax/' element={<TypeRedux />} />
-        <Route path='dev/createObjectRedax/place' element={<PlaceRedux />} />
+        {/* <Route path='dev/createObjectRedax/' element={<TypeRedux />} /> */}
+        <Route path='dev/createObjectRedax/' element={<StartInfoContainer />} />
+        {/* <Route path='dev/createObjectRedax/place' element={<PlaceRedux />} /> */}
         {/* <Route path='/step2' element={<CordsRedux />} /> */}
         <Route path='dev/createObjectRedax/about' element={<AboutRedux />} />
         <Route path='dev/createObjectRedax/addition' element={<AdditionRedux />} />
         <Route path='dev/createObjectRedax/final' element={<FinalPageRedux />} />
         <Route path='dev/createObjectRedax/check' element={<CheckRedux />} />
+        <Route path='dev/createObjectRedax/photo' element={<PhotoContainer />} />
         <Route path="*" element={<div className='text'>page not found</div>} />
       </Routes>
     </>

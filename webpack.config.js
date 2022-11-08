@@ -5,8 +5,8 @@ const htmlPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist', 'betta'),
+    filename: 'bundle-betta1.js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -59,7 +59,7 @@ module.exports = {
       minify: false,
     }),
     new miniCssPlugin({
-      filename: 'main.css'
+      filename: 'main-betta1.css'
     })
   ],
   devServer: {

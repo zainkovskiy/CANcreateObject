@@ -8,6 +8,7 @@ export const loader = createAction('[Object] loader');
 export const form = createAction('[Object] form');
 export const step = createAction('[Object] step');
 export const address = createAction('[Object] address');
+export const addRemovePhoto = createAction('[Object] addRemovePhoto');
 
 export function requestServer(){
   return function (dispatch){

@@ -1,12 +1,19 @@
 import React from 'react';
-import Button from "@mui/material/Button";
+import { useSelector, useDispatch } from 'react-redux';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
+import { newValue } from 'actions/object';
 
 import './Type.scss';
 
 export function Type(props) {
-  const { object, handle, step } = props;
+  const dispatch = useDispatch();
+  const propertyType = useSelector((state) => state.object.getIn(['entries', 'propertyType']));
+
+  const handle = () => {
+    dispatch(newValue(event))
+  }
 
   return (
     <>
@@ -14,9 +21,9 @@ export function Type(props) {
       <div className='wrapper_type'>
         <ToggleButtonGroup
           color="primary"
-          value={object.propertyType}
+          value={propertyType}
           exclusive
-          onChange={event => handle(event)}
+          onChange={handle}
         >
           <ToggleButton
             name='propertyType' value='Квартира' size="small">Квартира</ToggleButton>
@@ -26,45 +33,6 @@ export function Type(props) {
           <ToggleButton name='propertyType' size="small" value="Земельный участок">Земельный участок</ToggleButton>
           <ToggleButton name='propertyType' size="small" value="Гараж">Гараж</ToggleButton>
         </ToggleButtonGroup>
-        {/* {
-          (object.propertyType === 'Квартира' || object.propertyType === 'Переуступка ДДУ') &&
-          <div className='toggle-btn'>
-            <div className='toggle-btn__item toggle-btn__item50'>
-              <input
-                id='full'
-                name='propertyType'
-                type="radio"
-                checked={object.propertyType === 'Квартира'}
-                value='Квартира'
-                onChange={(event) => handle(event)}
-              />
-              <label htmlFor='full'>
-                Вторичка
-              </label>
-            </div>
-            <div className='toggle-btn__item toggle-btn__item50'>
-              <input
-                id='part'
-                name='propertyType'
-                type="radio"
-                checked={object.propertyType === 'Переуступка ДДУ'}
-                value='Переуступка ДДУ'
-                onChange={(event) => handle(event)}
-              />
-              <label htmlFor='part'>
-                Переуступка ДДУ
-              </label>
-            </div>
-          </div>
-        } */}
-        <Button
-          disabled={!object.propertyType}
-          style={{ alignSelf: 'flex-end' }}
-          variant="contained"
-          onClick={() => step('place')}
-        >
-          далее
-        </Button>
       </div>
     </>
   )

@@ -1,10 +1,19 @@
 import React from 'react';
 import Button from "@mui/material/Button";
+import { useDispatch } from 'react-redux';
+
+import { step, loader } from 'actions/object';
 
 import './FinalPage.scss';
 
 export function FinalPage(props) {
   const { object } = props;
+  const dispatch = useDispatch();
+
+  const handlePhoto = () => {
+    dispatch(step('photo'));
+  }
+
   return (
     <>
       <div className="final">
@@ -75,6 +84,16 @@ export function FinalPage(props) {
         <div className="final__block-text">
           <p className="final__row text">Цена: <span>{object.reqPrice}</span></p>
         </div>
+      </div>
+      <div className='grid-buttons'>
+        <div>§</div>
+        <Button
+          variant="contained"
+          type='submit'
+          onClick={handlePhoto}
+        >
+          Выбрать фото
+        </Button>
       </div>
     </>
   )

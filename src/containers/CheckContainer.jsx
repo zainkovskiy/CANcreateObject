@@ -109,10 +109,10 @@ class CheckContainer extends PureComponent {
               <div className='cards'>
                 {
                   this.state.answer?.data?.length > 0 &&
-                  this.state.answer.data.map(card =>
+                  this.state.answer.data.map((card, idx) =>
                     <CheckCard
                       card={card}
-                      key={card.reqNumber}
+                      key={idx}
                       selectObject={this.selectObject}
                     />
                   )

@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 import { Map, fromJS } from 'immutable';
 
-import { load, newValue, loader, form, step, address } from 'actions/object';
+import { load, newValue, loader, form, step, address, addRemovePhoto } from 'actions/object';
 
 const initialState = new Map({
   isLinear: true,
@@ -26,7 +26,8 @@ export const objectReducer = handleActions({
       "addressType": true,
       appartmentType: '',
       isPart: true,
-      "step": '',
+      "step": 'photo',
+      selectPhoto: []
     }))
   },
 
@@ -47,5 +48,13 @@ export const objectReducer = handleActions({
   },
   [address]: (state, action) => {
     return state.setIn(['entries', 'address'], action.payload)
+  },
+  [addRemovePhoto]: (state, action) => {
+    const findPhoto = state.getIn(['entries', 'selectPhoto']).find(item => item.UID === action.payload.UID);
+    if (findPhoto) {
+      const photoIndex = state.getIn(['entries', 'selectPhoto']).findIndex(item => item.UID === action.payload.UID);
+      return state.setIn(['entries', 'selectPhoto'], state.getIn(['entries', 'selectPhoto']).splice(photoIndex, 1))
+    }
+    return state.setIn(['entries', 'selectPhoto'], state.getIn(['entries', 'selectPhoto']).push(action.payload))
   },
 }, initialState)
