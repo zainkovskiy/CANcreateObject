@@ -26,7 +26,7 @@ export const objectReducer = handleActions({
       "addressType": true,
       appartmentType: '',
       isPart: true,
-      "step": 'photo',
+      "step": '',
       selectPhoto: []
     }))
   },
