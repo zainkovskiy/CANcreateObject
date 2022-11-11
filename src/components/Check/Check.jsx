@@ -16,7 +16,7 @@ export function Check({ requestCheck, load }) {
           size="small"
           name='float'
           fullWidth
-          value={float?.target?.value}
+          value={float}
           onChange={(event) => setFloat(event.target.value)}
           disabled={load}
         />
@@ -25,7 +25,7 @@ export function Check({ requestCheck, load }) {
           disabled={float.length === 0 || load}
           onClick={() => requestCheck(float)}
         >
-          check
+          поиск
         </Button>
       </div>
     </>

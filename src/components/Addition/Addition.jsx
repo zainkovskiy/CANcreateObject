@@ -23,21 +23,21 @@ export function Addition(props) {
       reqAreaForSell: object?.reqAreaForSell || '',
       reqAreaForSell2: object?.reqAreaForSell2 || '',
       reqAreaForSell3: object?.reqAreaForSell3 || '',
-      reqShareForSale : object?.reqShareForSale  || '',
-      reqShareForAll : object?.reqShareForAll  || '',
-      reqPrice : object?.reqPrice  || '',
+      reqShareForSale: object?.reqShareForSale || '',
+      reqShareForAll: object?.reqShareForAll || '',
+      reqPrice: object?.reqPrice || '',
     }
   })
   const onSubmit = (data) => {
     console.log(data);
     form(data);
-    step('final')
+    step('photo')
   }
   return (
     <>
       <span className='subtitle'>Цена и доля</span>
       <form onSubmit={handleSubmit(onSubmit)} className='wrapper-grid'>
-        {
+        {/* {
           object.propertyType === 'Комната' &&
           <div className='wrapper-grid_fullWidth'>
             <FormControlLabel
@@ -50,8 +50,8 @@ export function Addition(props) {
               sx={{ width: 'fit-content' }}
             />
           </div>
-        }
-        {
+        } */}
+        {/* {
           isPart && object.propertyType === 'Комната' ?
             <div className="wrapper-grid_fullWidth">
               <span className="text text_label">Количество комнат на продажу</span>
@@ -132,15 +132,36 @@ export function Addition(props) {
                 helperText={errors?.reqShareForAll?.message ? errors.reqShareForAll.message : ''}
               />
             </>
-        }
+        } */}
+        <TextFieldForm
+          label="Доля на продажу в %"
+          {
+          ...register('reqShareForSale', {
+            required: 'Поле обязательно к заполнению',
+            // validate: (e) => {return +e <= 100},
+            max: {
+              value: 100,
+              message: 'Не больше 100%' // JS only: <p>error message</p> TS only support string
+            },
+            min: {
+              value: 0,
+              message: 'Не может быть отрицательным числом' // JS only: <p>error message</p> TS only support string
+            }
+          })
+          }
+          type='number'
+          errors={errors?.reqShareForSale}
+          helperText={errors?.reqShareForSale?.message ? errors.reqShareForSale.message : ''}
+        />
         <TextFieldForm
           label="Цена"
+          type='number'
           {
           ...register('reqPrice', {
             required: 'Поле обязательно к заполнению'
           })
           }
-          error={errors?.reqPrice ? true : false}
+          errors={errors?.reqPrice}
           helperText={errors?.reqPrice?.message ? errors.reqPrice.message : ''}
         />
         <div className='grid-buttons'>
@@ -148,12 +169,14 @@ export function Addition(props) {
             variant="contained"
             type='button'
           // onClick={() => { form(getValues()), step(object.step - 1) }}
-          >back
+          >
+            назад
           </Button>
           <Button
             variant="contained"
             type='submit'
-          >submit
+          >
+            Далее
           </Button>
         </div>
       </form>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
@@ -28,7 +28,11 @@ export const CardPhoto = ({ photo }) => {
         variant="outlined"
         onClick={handleClick}
       >
-        select
+        {
+          photo.select ?
+          'удалить' :
+          'выбрать'
+        }
       </Button>
     </div>
   )

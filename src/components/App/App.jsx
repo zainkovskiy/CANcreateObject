@@ -26,11 +26,13 @@ export function App({ step }) {
         <Route path='dev/createObjectRedax/' element={<StartInfoContainer />} />
         {/* <Route path='dev/createObjectRedax/place' element={<PlaceRedux />} /> */}
         {/* <Route path='/step2' element={<CordsRedux />} /> */}
+        <Route path='dev/createObjectRedax/check' element={<CheckRedux />} />
         <Route path='dev/createObjectRedax/about' element={<AboutRedux />} />
         <Route path='dev/createObjectRedax/addition' element={<AdditionRedux />} />
-        <Route path='dev/createObjectRedax/final' element={<FinalPageRedux />} />
-        <Route path='dev/createObjectRedax/check' element={<CheckRedux />} />
         <Route path='dev/createObjectRedax/photo' element={<PhotoContainer />} />
+        <Route path='dev/createObjectRedax/access' element={<span className='text' style={{marginLeft: '1rem'}}>Объект успешно создан</span>} />
+        <Route path='dev/createObjectRedax/error' element={<span className='text' style={{marginLeft: '1rem'}}>Что то пошло не так</span>} />
+        {/* <Route path='dev/createObjectRedax/final' element={<FinalPageRedux />} /> */}
         <Route path="*" element={<div className='text'>page not found</div>} />
       </Routes>
     </>

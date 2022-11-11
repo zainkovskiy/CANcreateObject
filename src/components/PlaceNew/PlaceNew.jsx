@@ -466,7 +466,22 @@ export const PlaceNew = () => {
                 fullWidth
                 value={object?.address?.reqStreet ? object?.address?.reqStreet : ''}
               />
-              <div></div>
+              <Controller
+                name='reqFlat'
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) =>
+                  <TextField
+                    autoComplete="off"
+                    label='Номер квартиры'
+                    size="small"
+                    fullWidth
+                    error={errors?.reqFlat ? true : false}
+                    helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
+                    {...field}
+                  />
+                }
+              />
             </>
         }
         <Cords

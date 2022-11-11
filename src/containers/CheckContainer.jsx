@@ -14,65 +14,36 @@ import { step } from 'actions/object';
 
 class CheckContainer extends PureComponent {
   state = {
-    load: false,
+    load: true,
     answer: null,
     modal: false,
     currentObject: ''
   }
-  requestCheck = async (float) => {
+  requestCheck = async () => {
     const { object, nextStep } = this.props;
-    this.setState({ load: !this.state.load });
+    // this.setState({ load: !this.state.load });
     try {
       const res = await axios.post('https://hs-01.centralnoe.ru/Project-Selket-Main/Servers/Creator/Controller.php', {
         action: 'check',
         object: object,
-        float: float
+        float: object.reqFlat
       });
-      if (!res.data.result) {
+      if (res?.data) {
         this.setState({ answer: res.data })
-      } else {
-        nextStep('about')
       }
+      // if (!res.data.result) {
+      //   this.setState({ answer: res.data })
+      // } else {
+      //   nextStep('about')
+      // }
     } catch (err) {
       console.log(err);
     } finally {
       this.setState({ load: !this.state.load });
     }
-    // this.setState({
-    //   answer: {
-    //     "action": "check",
-    //     "result": true,
-    //     "overlap": "full",
-    //     "data": [
-    //       {
-    //         "reqNumber": 6516516516,
-    //         "photo": "https://zhenomaniya.ru/wp-content/uploads/2018/09/1-2.jpg",
-    //         "address": "Новосибирск, ул Ватутина 22",
-    //         "docType": "free",
-    //         "areas": "50/15/48",
-    //         "overlap": "full"
-    //       },
-    //       {
-    //         "reqNumber": 651651651,
-    //         "photo": "https://stihi.ru/pics/2015/01/08/4035.jpg",
-    //         "address": "Новосибирск, ул Ватутина 34",
-    //         "docType": "exclusive",
-    //         "areas": "50/15/48",
-    //         "overlap": "half"
-    //       },
-    //       {
-    //         "reqNumber": 651651651651,
-    //         "photo": "http://www.mice-award.ru/media/images/products/153/85379-icon.jpg",
-    //         "address": "Новосибирск, ул Ватутина 122",
-    //         "docType": "adv",
-    //         "areas": "50/15/48",
-    //         "overlap": "half"
-    //       }
-    //     ]
-    //   }
-    // }, () => {
-    //   this.setState({ load: !this.state.load })
-    // })
+  }
+  componentDidMount() {
+    this.requestCheck();
   }
   openWindow = () => {
     this.setState({ modal: !this.state.modal })
@@ -98,29 +69,30 @@ class CheckContainer extends PureComponent {
     return (
       <>
         <span className="subtitle">Поиск дубля</span>
-        <Check
+        {/* <Check
           requestCheck={this.requestCheck}
           load={this.state.load}
-        />
+        /> */}
         {
           this.state.load ?
             <Linear /> :
             <div>
               <div className='cards'>
                 {
-                  this.state.answer?.data?.length > 0 &&
+                  this.state.answer?.data?.length > 0 ?
                   this.state.answer.data.map((card, idx) =>
                     <CheckCard
                       card={card}
                       key={idx}
                       selectObject={this.selectObject}
                     />
-                  )
+                  ) :
+                  <span className="text">Нет совпадений по дублям</span>
                 }
               </div>
               <div className='cards__btn'>
                 {
-                  (this.state.answer?.overlap && this.state.answer.overlap !== 'full') &&
+                  // (this.state.answer?.overlap && this.state.answer.overlap !== 'full') &&
                   <Button
                     variant="contained"
                     onClick={() => { nextStep('about') }}

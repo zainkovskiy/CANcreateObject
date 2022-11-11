@@ -9,6 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { Dadata } from 'components/Dadata';
 import { Cords } from 'components/Cords';
 import { Uploader } from 'components/Uploader';
+import { TextFieldForm } from "components/TextFieldForm";
 
 import { form, step } from 'actions/object';
 
@@ -79,21 +80,29 @@ export function PlaceAll() {
         {
           absentAddress ?
             <>
-              <div className='wrapper-grid_fullWidth'>
-                <TextField
-                  autoComplete="off"
-                  label='Адрес'
-                  size="small"
-                  fullWidth
-                  error={errors?.newAddress ? true : false}
-                  helperText={errors?.newAddress?.message ? errors.newAddress.message : ''}
-                  {
-                  ...register('newAddress', {
-                    required: 'Поле обязательно к заполнению'
-                  })
-                  }
-                />
-              </div>
+              <TextField
+                autoComplete="off"
+                label='Адрес'
+                size="small"
+                fullWidth
+                error={errors?.newAddress ? true : false}
+                helperText={errors?.newAddress?.message ? errors.newAddress.message : ''}
+                {
+                ...register('newAddress', {
+                  required: 'Поле обязательно к заполнению'
+                })
+                }
+              />
+              <TextFieldForm
+                label='Номер квартиры'
+                {
+                ...register('reqFlat', {
+                  required: 'Поле обязательно к заполнению'
+                })
+                }
+                errors={errors.reqFlat}
+                helperText={errors?.reqFlat?.message ? errors.reqFlat.message : ''}
+              />
               <div className='wrapper-grid_fullWidth'>
                 <Uploader
                   object={object}
@@ -127,6 +136,8 @@ export function PlaceAll() {
             <Dadata
               addressError={addressError}
               object={object}
+              register={register}
+              errors={errors}
             />
         }
         <Cords

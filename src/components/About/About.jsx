@@ -79,34 +79,34 @@ export function About(props) {
           <>
             <TextFieldForm
               label="Площадь жилая (m2)"
-              {
-              ...register('livingArea', {
-                required: 'Поле обязательно к заполнению'
-              })
-              }
-              errors={errors.livingArea}
+            // {
+            // ...register('livingArea', {
+            //   required: 'Поле обязательно к заполнению'
+            // })
+            // }
+            // errors={errors.livingArea}
             />
             <TextFieldForm
               label="Площадь кухни (m2)"
-              {
-              ...register('kitchenArea', {
-                required: 'Поле обязательно к заполнению'
-              })
-              }
-              errors={errors.kitchenArea}
+            // {
+            // ...register('kitchenArea', {
+            //   required: 'Поле обязательно к заполнению'
+            // })
+            // }
+            // errors={errors.kitchenArea}
             />
           </>
         }
         {
           object.propertyType !== 'Земельный участок' &&
           <TextFieldForm
-            label="Высота потолков"
-            {
-            ...register('ceilingHeight', {
-              required: 'Поле обязательно к заполнению'
-            })
-            }
-            errors={errors.ceilingHeight}
+          label="Высота потолков"
+          // {
+          // ...register('ceilingHeight', {
+          //   required: 'Поле обязательно к заполнению'
+          // })
+          // }
+          // errors={errors.ceilingHeight}
           />
         }
         {
@@ -115,7 +115,7 @@ export function About(props) {
             <FormControlLabel
               label='Общее количество комнат'
               labelPlacement="top"
-              style={{margin: 0}}
+              style={{ margin: 0 }}
               control={
                 <Controller
                   control={control}
@@ -462,12 +462,14 @@ export function About(props) {
             variant="contained"
             type='button'
             onClick={() => { form(getValues()), step('place') }}
-          >back
+          >
+            назад
           </Button>
           <Button
             variant="contained"
             type='submit'
-          >submit
+          >
+            далее
           </Button>
         </div>
       </form>

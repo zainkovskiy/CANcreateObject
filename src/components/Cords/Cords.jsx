@@ -59,6 +59,9 @@ export const Cords = (props) => {
             })
           }
           errors={errors.lat}
+          inputProps = {{
+            readOnly: true
+          }}
         />
         <TextFieldForm
           label='Координаты Y'
@@ -68,6 +71,9 @@ export const Cords = (props) => {
             })
           }
           errors={errors.lng}
+          inputProps = {{
+            readOnly: true
+          }}
         />
         {
           (object.propertyType === 'Дом, коттедж, дача' || object.propertyType === 'Змельный участок') &&
@@ -117,7 +123,7 @@ export const Cords = (props) => {
             variant="contained"
             type='submit'
             // disabled={point.length === 0} 
-          >next
+          >Далее
           </Button>
         </div>
     </>

@@ -15,7 +15,7 @@ export function SelectForm(props) {
   } = useController({
     name,
     control,
-    rules: { required: 'Поле обязательно к заполнению' },
+    // rules: { required: 'Поле обязательно к заполнению' },
     defaultValue: defaultValue,
   });
   return (

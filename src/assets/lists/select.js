@@ -13,6 +13,7 @@ export const selectList = {
     'Монолитно-каркасный', 
   ],
   loggias: [
+    "0",
     "1",
     "2",
     "3",
@@ -20,6 +21,7 @@ export const selectList = {
     "5",
   ],
   gallery: [
+    "0",
     "1",
     "2",
     "3",

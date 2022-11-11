@@ -6,7 +6,7 @@ module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist', 'betta'),
-    filename: 'bundle-betta1.js',
+    filename: 'bundle-betta2.js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
